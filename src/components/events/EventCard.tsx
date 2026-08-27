@@ -102,7 +102,7 @@ export function EventPlaceholder() {
   return (
     <div
       aria-hidden
-      className="aspect-[330/396] w-full border border-dashed border-ink"
+      className="aspect-[330/395] w-full border border-dashed border-ink"
     />
   );
 }

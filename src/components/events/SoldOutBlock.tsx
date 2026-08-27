@@ -11,14 +11,14 @@
 export function SoldOutBlock() {
   return (
     <div
-      className="relative aspect-[330/396] w-full border border-dashed border-ink"
+      className="relative aspect-[330/395] w-full border border-dashed border-ink"
       role="img"
       aria-label="Sold out"
     >
       {/* The two crossing rules, drawn corner to corner */}
       <svg
         className="absolute inset-0 size-full"
-        viewBox="0 0 330 396"
+        viewBox="0 0 330 395"
         preserveAspectRatio="none"
         aria-hidden
       >
@@ -26,7 +26,7 @@ export function SoldOutBlock() {
           x1="0"
           y1="0"
           x2="330"
-          y2="396"
+          y2="395"
           stroke="currentColor"
           strokeWidth="1"
           strokeDasharray="4 4"
@@ -36,7 +36,7 @@ export function SoldOutBlock() {
           x1="330"
           y1="0"
           x2="0"
-          y2="396"
+          y2="395"
           stroke="currentColor"
           strokeWidth="1"
           strokeDasharray="4 4"

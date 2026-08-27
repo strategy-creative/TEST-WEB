@@ -6,6 +6,7 @@
  */
 
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { NavBar } from "@/components/nav/NavBar";
@@ -70,34 +71,26 @@ export default async function EventPage({
                   {event.subtitle ? ` ${event.subtitle}` : ""}
                 </h1>
 
-                <div className="flex flex-col gap-[52px] font-body text-(length:--text-micro) leading-[1.15] tracking-[-0.03em]">
-                  <div className="flex flex-col gap-[16px] sm:flex-row sm:gap-[139px]">
-                    <p className="shrink-0 whitespace-nowrap">
-                      About this event:
-                    </p>
-                    <p className="max-w-[308px]">{event.description}</p>
-                  </div>
+                {/*
+                  Two columns, one grid: the labels sit at 0 and BOTH
+                  content blocks start at 234px, so the description and
+                  the DJ names line up down the page exactly as drawn.
+                  Do not swap this back to separate flex rows — that is
+                  what let the two columns drift out of alignment.
+                */}
+                <div className="grid grid-cols-1 gap-x-[0px] gap-y-[52px] font-body text-(length:--text-micro) tracking-[-0.03em] sm:grid-cols-[234px_1fr]">
+                  <p className="whitespace-nowrap">About this event:</p>
+                  <p className="max-w-[307px]">{event.description}</p>
 
-                  <div className="flex flex-col gap-[16px] sm:flex-row sm:justify-between">
-                    <p className="w-[233px] shrink-0">DJ&rsquo;s:</p>
-
-                    <dl className="flex w-full max-w-[330px] justify-between">
-                      <div className="flex flex-col">
-                        {event.lineup.map((slot) => (
-                          <dt key={slot.name} className="leading-[1.2]">
-                            {slot.name}
-                          </dt>
-                        ))}
-                      </div>
-                      <div className="flex flex-col">
-                        {event.lineup.map((slot) => (
-                          <dd key={slot.name} className="leading-[1.2]">
-                            {slot.time}
-                          </dd>
-                        ))}
-                      </div>
-                    </dl>
-                  </div>
+                  <p className="whitespace-nowrap">DJ&rsquo;s:</p>
+                  <dl className="grid max-w-[307px] grid-cols-[116px_1fr]">
+                    {event.lineup.map((slot) => (
+                      <Fragment key={slot.name}>
+                        <dt>{slot.name}</dt>
+                        <dd>{slot.time}</dd>
+                      </Fragment>
+                    ))}
+                  </dl>
                 </div>
               </div>
             </div>

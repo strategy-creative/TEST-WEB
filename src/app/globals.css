@@ -85,6 +85,16 @@ body {
   color: var(--color-ink);
   font-family: var(--font-mono);
   text-transform: uppercase;
+  /*
+   * ⚠ Tailwind's preflight sets line-height: 1.5 on the root. The Figma
+   * file sets everything to `normal` (~1.2 in Fragment Mono), so
+   * inheriting 1.5 makes every stacked line — event cards, dates,
+   * footer — sit noticeably too far apart. Do not remove this line.
+   * Where a specific value is wanted, set it on the element:
+   *   leading-[0.9]  logo and page-state headings
+   *   leading-[1.1]  the gallery acts line
+   */
+  line-height: normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -101,6 +111,8 @@ body {
 .font-body {
   font-family: var(--font-sans);
   text-transform: none;
+  /* Running copy needs a little more air than the mono UI text. */
+  line-height: 1.2;
 }
 
 /*
