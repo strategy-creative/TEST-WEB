@@ -67,22 +67,62 @@ The site is a direct build of a Figma file
   slots, the checkout panel, the sold-out block. They are not placeholders to
   be tidied away.
 
-### Fonts — read before "fixing" the typography
+### The home page
 
-The Figma file uses four typefaces. Two are commercial licences the venue does
-not currently hold:
+Three rules that are easy to break by accident:
 
-| Figma font                  | Status                    | In the build                        |
-| --------------------------- | ------------------------- | ----------------------------------- |
-| Fragment Mono               | Free (Google/OFL)         | ✅ the real thing, via npm          |
-| Fragment Mono SC            | Free, but not on npm      | Fragment Mono + synthesised smallcaps |
-| ABC Favorit                 | 💰 Dinamo, needs a licence | Fragment Mono stands in             |
-| Neue Haas Grotesk Text Pro  | 💰 Monotype, needs licence | Inter stands in                     |
+1. **All text is plain white.** No blending on the nav or the labels.
+2. **The circle strip is the only thing that blends.** It carries
+   `mix-blend-difference` so it inverts against the video behind it and reacts
+   to the footage. The blend lives on the positioned wrapper in
+   `src/app/page.tsx`, **not** on the SVG — `z-10` creates a stacking context,
+   and a blend applied inside one cannot see the video. If the circles ever go
+   flat white, that is the cause.
+3. **The strip is pinned 20px from the bottom of the viewport** and capped at
+   1380px wide so it does not balloon on large monitors. On phones it holds a
+   minimum width and bleeds off the right edge rather than shrinking to specks.
 
-The trial fonts in the Figma file are **not licensed for a live website**.
-Either buy the licences and drop the webfont files into `src/app/fonts/`, or
-leave the substitutes — they are chosen to sit close. Do not download the
-"trial" files onto the server.
+### Fonts — two typefaces, and only two
+
+This is settled. Do not introduce a third.
+
+| Face                       | Used for                          | Case            |
+| -------------------------- | --------------------------------- | --------------- |
+| **Fragment Mono**          | Everything — nav, labels, buttons, events, checkout | **ALWAYS UPPERCASE** |
+| **Neue Haas Grotesk**      | Running body copy only (event descriptions) | Sentence case |
+
+The earlier Figma file also referenced Fragment Mono SC and ABC Favorit.
+Both are gone. Do not reintroduce them.
+
+#### ⚠ The uppercase rule
+
+**Every use of Fragment Mono is all caps, everywhere, without exception.**
+
+It is enforced once, in `src/app/globals.css`:
+
+```css
+body { font-family: var(--font-mono); text-transform: uppercase; }
+```
+
+That means content in `/content` can be typed in any case and still comes out
+uppercase. Do not add `uppercase` classes to individual components — it is
+already handled — and do not add `text-transform: none` anywhere to work
+around it.
+
+The single exception is `.font-body`, which switches to Neue Haas and opts
+back into sentence case. It is used for the event description paragraphs.
+**Do not create a second exception.**
+
+#### Neue Haas licensing
+
+Neue Haas Grotesk Text Pro is a Monotype licence. The font stack in
+`globals.css` names it first and falls back to Inter, so:
+
+- If the venue holds a webfont licence, drop the files into `src/app/fonts/`
+  and add an `@font-face` — nothing else changes.
+- Until then, Inter renders in its place. Close enough that it is not urgent.
+
+Never commit "trial" font files. They are not licensed for a live site.
 
 ---
 
@@ -93,6 +133,12 @@ All motion lives in `src/components/motion/`. Three pieces:
 - `PageLoader` — the black wipe on first load. Runs once per browser session.
 - `SmoothScroll` — Lenis. `lerp` is the only dial worth touching.
 - `Reveal` — the scroll-in fade. Wrap anything: `<Reveal>…</Reveal>`.
+
+Plus `src/components/home/HeroVideo.tsx` — the looping home page video.
+It shows the still poster on phones and to anyone with reduced motion on;
+that is deliberate, not a bug. Encoding notes are in the file. Keep the MP4
+under about 4MB and always strip audio (`-an`) — browsers refuse to autoplay
+anything with sound.
 
 **Do not scatter animation code through the page components.** If a section
 should animate in, wrap it in `<Reveal>`. This is deliberate: it means content

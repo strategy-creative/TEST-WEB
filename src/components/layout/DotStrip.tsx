@@ -10,7 +10,10 @@
  * hand — if the pattern changes in Figma, re-export and replace the
  * DOTS list below.
  *
- * `blend` renders it white-on-difference for the dark hero.
+ * `blend` fills the circles white so that a `mix-blend-difference` on
+ * an ANCESTOR inverts them against whatever is behind — on the home
+ * page, the video. The blend itself belongs on that ancestor, not here:
+ * see the note in src/app/page.tsx.
  */
 
 const R = 27.7694;
@@ -45,11 +48,18 @@ const DOTS: Array<[number, number]> = [
   [1036.88, 153.908],
 ];
 
-export function DotStrip({ blend = false }: { blend?: boolean }) {
+export function DotStrip({
+  blend = false,
+  className = "",
+}: {
+  blend?: boolean;
+  /** Extra classes on the <svg>. Used to set a minimum width on phones. */
+  className?: string;
+}) {
   return (
     <svg
       viewBox="0 0 1380 182"
-      className={`w-full ${blend ? "mix-blend-difference" : ""}`}
+      className={`w-full ${className}`}
       fill={blend ? "#ffffff" : "currentColor"}
       aria-hidden
     >

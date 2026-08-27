@@ -27,7 +27,7 @@ export function SimplePage({
           <h1 className="font-sc text-[clamp(1.75rem,3vw,38.964px)] tracking-design">
             {title}
           </h1>
-          <div className="mt-[60px] max-w-[560px] font-sans text-(length:--text-micro) leading-[1.6] tracking-[-0.02em]">
+          <div className="mt-[60px] max-w-[560px] font-body text-(length:--text-micro) leading-[1.6] tracking-[-0.02em]">
             {children}
           </div>
         </Reveal>

@@ -27,19 +27,15 @@ type NavBarProps = {
 export function NavBar({ pageName, theme = "light" }: NavBarProps) {
   const [open, setOpen] = useState(false);
 
-  // When the overlay is open the bar always sits on black.
+  // Over the home page video and inside the open menu, the nav is plain
+  // white — no blending. Only the circle strip blends with the footage.
   const onDark = open || theme === "dark";
   const tone = onDark ? "text-paper" : "text-heading";
-
-  // Difference blending is what lets the logo stay legible over the
-  // home page photo. On white pages it would erase the nav, so it is
-  // applied only over dark backgrounds.
-  const blend = onDark ? "mix-blend-difference" : "";
 
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 px-(--spacing-gutter) py-(--spacing-gutter) ${tone} ${blend} transition-colors duration-300`}
+        className={`fixed inset-x-0 top-0 z-50 px-(--spacing-gutter) py-(--spacing-gutter) ${tone} transition-colors duration-300`}
       >
         <div className="flex items-start justify-between">
           <div className="flex items-baseline gap-[110px]">

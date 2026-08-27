@@ -68,6 +68,19 @@ The 01 / 02 / 03 numbering updates itself.
 
 `content/site.ts`.
 
+### Change the home page video
+
+Replace `public/video/hero.mp4` and `public/images/home-hero-poster.jpg`.
+Keep the video under about 4MB and strip the audio — the encoding command is
+in `src/components/home/HeroVideo.tsx`. Phones see the poster image instead
+of the video on purpose, to save people's mobile data.
+
+### A note on capitals
+
+The site sets Fragment Mono in all caps everywhere, automatically. Type
+event titles however you like in `content/events.ts` — they come out
+uppercase either way.
+
 ---
 
 ## Ticket sales
@@ -125,5 +138,5 @@ Good things to ask for:
 - Real terms and conditions on `/terms`
 - Decide whether Log in / Register are needed at all — if ticketing is
   external, probably not
-- Buy licences for ABC Favorit and Neue Haas Grotesk if you want the exact
-  Figma typography (see `CLAUDE.md` → Fonts)
+- Buy a Neue Haas Grotesk webfont licence if you want it exact — Inter stands
+  in until then (see `CLAUDE.md` → Fonts)

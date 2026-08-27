@@ -70,7 +70,7 @@ export default async function EventPage({
                   {event.subtitle ? ` ${event.subtitle}` : ""}
                 </h1>
 
-                <div className="flex flex-col gap-[52px] font-sans text-(length:--text-micro) leading-[1.15] tracking-[-0.03em]">
+                <div className="flex flex-col gap-[52px] font-body text-(length:--text-micro) leading-[1.15] tracking-[-0.03em]">
                   <div className="flex flex-col gap-[16px] sm:flex-row sm:gap-[139px]">
                     <p className="shrink-0 whitespace-nowrap">
                       About this event:

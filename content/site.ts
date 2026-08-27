@@ -19,8 +19,17 @@ export const site = {
     left: "UNIT/20",
     centre: "CHRISTCHURCH,NZ",
     right: "-43.5374 /172.6410",
-    /** Full-bleed background photo. Put the file in public/images/. */
-    image: "/images/home-hero.jpg",
+    /**
+     * Full-bleed background video. Shown on screens 768px and wider.
+     * See src/components/home/HeroVideo.tsx before replacing it —
+     * there are encoding settings that matter.
+     */
+    video: "/video/hero.mp4",
+    /**
+     * Still frame. Shown on phones, on slow connections, and to anyone
+     * with reduced motion turned on. Should look good on its own.
+     */
+    poster: "/images/home-hero-poster.jpg",
     imageAlt: "A packed crowd on the UNIT/20 dancefloor",
   },
 

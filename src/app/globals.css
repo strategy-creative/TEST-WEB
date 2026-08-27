@@ -20,11 +20,20 @@
   --color-scrim: rgb(0 0 0 / 0.6); /* darkening over event images on hover */
 
   /* ── Type ────────────────────────────────────────────────── */
-  /* Fragment Mono — the whole site. See CLAUDE.md → Fonts. */
+  /*
+   * Two typefaces, and only two.
+   *
+   * Fragment Mono — the site's voice. ALWAYS UPPERCASE, enforced
+   * globally in the BASE section below. Never write lowercase copy
+   * expecting it to render lowercase in this face.
+   *
+   * Neue Haas Grotesk — running body copy only (event descriptions).
+   * Set in sentence case. Applied with the .font-body class, which
+   * also opts out of the uppercase rule.
+   */
   --font-mono: "Fragment Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  /* Stand-in for Neue Haas Grotesk Text Pro (licensed). */
-  --font-sans: "Inter Variable", Inter, "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
+  --font-sans: "Neue Haas Grotesk Text Pro", "Inter Variable", Inter,
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   /* Sizes lifted straight from the Figma frames. */
   --text-display: 73.333px; /* gallery acts line */
@@ -60,10 +69,22 @@ html {
   scroll-behavior: auto;
 }
 
+/*
+ * ⚠ THE UPPERCASE RULE
+ * Fragment Mono is set in ALL CAPS everywhere on this site, without
+ * exception. It is enforced here rather than sprinkled through the
+ * components, so no page can drift out of it and no content edit can
+ * break it. Type lowercase in the content files if you like — it comes
+ * out uppercase.
+ *
+ * The ONLY thing that opts out is .font-body (Neue Haas Grotesk), used
+ * for running body copy. Do not add other exceptions.
+ */
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-mono);
+  text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -74,15 +95,22 @@ body {
 }
 
 /*
- * The Figma file uses "Fragment Mono SC" (small caps) for UI text and
- * "Fragment Mono" for display. Fragment Mono SC is not distributed on
- * npm, so mixed-case text in that role is rendered as synthesised small
- * caps. Where text is already uppercase the two are visually identical.
- * See CLAUDE.md → Fonts for the one-file swap to the real face.
+ * Neue Haas Grotesk — running body copy only. Sentence case, and the
+ * one place the uppercase rule does not apply.
+ */
+.font-body {
+  font-family: var(--font-sans);
+  text-transform: none;
+}
+
+/*
+ * Legacy alias. The Figma file distinguished "Fragment Mono" from
+ * "Fragment Mono SC"; with everything uppercase the two render
+ * identically, so this is now just Fragment Mono. Kept so existing
+ * markup keeps working — no need to strip it out.
  */
 .font-sc {
   font-family: var(--font-mono);
-  font-variant-caps: small-caps;
 }
 
 /* Respect the visitor's OS setting. Non-negotiable. */
@@ -127,14 +155,3 @@ body {
   }
 }
 
-/* Slow push-in on the home page hero photo. */
-@keyframes hero-in {
-  from {
-    transform: scale(1.08);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
