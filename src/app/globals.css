@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   Every colour, size and spacing value in the design lives here.
+   Components reference these — they never hardcode a hex or a px.
+   Change a value here and it changes everywhere.
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Colour ──────────────────────────────────────────────── */
+  --color-ink: #000000; /* body text, borders, buttons */
+  --color-paper: #ffffff; /* page background */
+  --color-heading: #1f1f1e; /* logo + page-state heading */
+  --color-muted: #b3b3b3; /* large de-emphasised display type */
+  --color-muted-soft: #c3c3c3; /* small placeholder text */
+  --color-muted-soft-alt: #c0c0c0; /* sold-out ticket tiers */
+  --color-field: #f5f5f5; /* input fills, empty detail panels */
+  --color-placeholder: #d9d9d9; /* image placeholder fill */
+  --color-scrim: rgb(0 0 0 / 0.6); /* darkening over event images on hover */
+
+  /* ── Type ────────────────────────────────────────────────── */
+  /* Fragment Mono — the whole site. See CLAUDE.md → Fonts. */
+  --font-mono: "Fragment Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* Stand-in for Neue Haas Grotesk Text Pro (licensed). */
+  --font-sans: "Inter Variable", Inter, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+
+  /* Sizes lifted straight from the Figma frames. */
+  --text-display: 73.333px; /* gallery acts line */
+  --text-title: 38.964px; /* event page title */
+  --text-heading: 32px; /* logo + page state */
+  --text-checkout: 30.545px; /* CHECKOUT / price */
+  --text-label: 19.923px; /* home hero labels */
+  --text-cta: 18.25px; /* GET TICKETS, SOLD OUT */
+  --text-body: 17.963px; /* checkout body */
+  --text-base: 16px; /* event cards, footer */
+  --text-caption: 13.061px; /* dates, field text */
+  --text-micro: 12.832px; /* event description */
+  --text-tiny: 11.931px; /* card field labels */
+  --text-meta: 10px; /* event card date line */
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --spacing-gutter: 30px; /* page margin, all four sides */
+  --container-frame: 1380px; /* content width inside the gutters */
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  /* Change these two and the whole site's feel changes. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-reveal: 900ms;
+  --duration-quick: 400ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ═══════════════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════════════ */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  /* Lenis drives scrolling; native smooth scroll would fight it. */
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The design tracks type tightly at every size. */
+.tracking-design {
+  letter-spacing: -0.01em;
+}
+
+/*
+ * The Figma file uses "Fragment Mono SC" (small caps) for UI text and
+ * "Fragment Mono" for display. Fragment Mono SC is not distributed on
+ * npm, so mixed-case text in that role is rendered as synthesised small
+ * caps. Where text is already uppercase the two are visually identical.
+ * See CLAUDE.md → Fonts for the one-file swap to the real face.
+ */
+.font-sc {
+  font-family: var(--font-mono);
+  font-variant-caps: small-caps;
+}
+
+/* Respect the visitor's OS setting. Non-negotiable. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE LOADER
+   The black wipe on first load. Removing the <PageLoader> component
+   from layout.tsx removes it entirely.
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes loader-out {
+  0%,
+  55% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes loader-count {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  50% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Slow push-in on the home page hero photo. */
+@keyframes hero-in {
+  from {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
