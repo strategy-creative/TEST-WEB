@@ -159,8 +159,14 @@ export function ImageGrid({ act, images, selected, onSelect }: ImageGridProps) {
                     alt={selected.alt}
                     fill
                     sizes="563px"
-                    /* contain, so the whole photo is visible in the square */
-                    className="object-contain"
+                    /*
+                     * cover, so the photo fills the square edge to edge.
+                     * Landscape shots get cropped top and bottom — that
+                     * is intended. Switch to object-contain only if the
+                     * whole frame must be visible, and accept the grey
+                     * bands that come with it.
+                     */
+                    className="object-cover"
                   />
                 </motion.div>
               ) : null}

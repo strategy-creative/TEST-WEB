@@ -1,17 +1,17 @@
 /**
  * HOME PAGE
  * ─────────────────────────────────────────────────────────────
- * Full-bleed looping video, three labels across the middle, and the
- * circle strip pinned to the bottom of the screen.
+ * Full-bleed looping video and the circle strip pinned to the bottom of
+ * the screen. Nothing else — the page is deliberately bare, with the
+ * nav bar the only text over the footage.
  *
- * Text on this page is plain white — no blending. The CIRCLES are the
- * only thing that blends: they invert against whatever the video is
- * doing behind them, so they react to the footage.
+ * The CIRCLES are the one thing that blends: they invert against
+ * whatever the video is doing behind them, so they react to the
+ * footage.
  *
- * All copy comes from content/site.ts → hero.
+ * The video and poster come from content/site.ts → hero.
  */
 
-import { site } from "../../content/site";
 import { NavBar } from "@/components/nav/NavBar";
 import { DotStrip } from "@/components/layout/DotStrip";
 import { HeroVideo } from "@/components/home/HeroVideo";
@@ -23,15 +23,6 @@ export default function HomePage() {
 
       <main className="relative h-svh w-full overflow-hidden bg-ink">
         <HeroVideo />
-
-        {/* The three labels, just above centre as in the design. */}
-        <div className="absolute inset-x-0 top-[calc(50%-104px)] z-10 px-(--spacing-gutter)">
-          <div className="flex items-baseline justify-between font-sc text-(length:--text-label) tracking-design text-paper">
-            <span>{site.hero.left}</span>
-            <span className="hidden sm:inline">{site.hero.centre}</span>
-            <span className="hidden md:inline">{site.hero.right}</span>
-          </div>
-        </div>
 
         {/*
           Circle strip: pinned 20px off the bottom of the screen, and

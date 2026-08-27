@@ -14,9 +14,11 @@ export const site = {
   description:
     "UNIT/20 is a club and live venue in Christchurch, New Zealand. Events, tickets and gallery.",
 
-  /** The three labels across the middle of the home page hero. */
   hero: {
-    left: "UNIT/20",
+    /**
+     * Location line. No longer shown on the home page — it now appears
+     * along the bottom of the open menu overlay.
+     */
     centre: "CHRISTCHURCH,NZ",
     right: "-43.5374 /172.6410",
     /**
