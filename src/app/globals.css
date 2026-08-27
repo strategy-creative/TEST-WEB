@@ -13,6 +13,7 @@
   --color-paper: #ffffff; /* page background */
   --color-heading: #1f1f1e; /* logo + page-state heading */
   --color-muted: #b3b3b3; /* large de-emphasised display type */
+  --color-muted-hover: #6e6e6e; /* gallery acts on hover, between grey and black */
   --color-muted-soft: #c3c3c3; /* small placeholder text */
   --color-muted-soft-alt: #c0c0c0; /* sold-out ticket tiers */
   --color-field: #f5f5f5; /* input fills, empty detail panels */
@@ -97,6 +98,19 @@ body {
   line-height: normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/*
+ * Form controls do not inherit text-transform from their parent by
+ * default, so buttons, inputs and selects would escape the uppercase
+ * rule above. This puts them back under it.
+ */
+button,
+input,
+select,
+textarea,
+optgroup {
+  text-transform: inherit;
 }
 
 /* The design tracks type tightly at every size. */

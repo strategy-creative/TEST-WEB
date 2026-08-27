@@ -45,13 +45,15 @@ export const site = {
   /** Bottom-right of the footer. */
   copyright: "ALL RIGHTS RESERVED @UNIT20",
 
-  /** Links in the full-screen menu overlay (the hamburger). */
+  /**
+   * Links in the full-screen menu overlay (the hamburger).
+   * They render at logo size, stacked, in the second column.
+   */
   menuLinks: [
-    { label: "HOME", href: "/" },
+    { label: "BUY TICKETS", href: "/events" },
     { label: "EVENTS", href: "/events" },
     { label: "GALLERY", href: "/gallery" },
     { label: "LOG IN", href: "/login" },
-    { label: "REGISTER", href: "/register" },
   ],
 } as const;
 

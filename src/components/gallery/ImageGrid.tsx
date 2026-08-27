@@ -1,92 +1,195 @@
+"use client";
+
 /**
  * GALLERY IMAGE GRID
  * ─────────────────────────────────────────────────────────────
- * The stepped, offset column of photos with 01/02/03 numbering, plus
- * the empty detail panel on the right.
+ * The stepped column of photos on the left, and the large viewing panel
+ * on the right.
  *
- * Numbering is derived from position in content/gallery.ts — add a
- * photo anywhere and the numbers renumber themselves.
+ * Clicking a photo loads it into the panel. The caption sits below the
+ * panel, left-aligned with it.
  *
- * The panel on the right is intentionally empty in the design. It is
- * where a caption, date or credit for the hovered image would go; wire
- * it up when there is copy for it.
+ * THE WAVE
+ * When the act changes, the photos leave and the new set rises into
+ * place one after another — a stagger of WAVE_STEP seconds per photo,
+ * so it reads as a wave travelling down the column rather than
+ * everything appearing at once. Turn it down, not off, if it feels
+ * slow: below about 0.05 the effect disappears.
  */
 
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
-import { galleryImages } from "../../../content/gallery";
-import { Reveal } from "../motion/Reveal";
+import { AnimatePresence, motion } from "motion/react";
+import type { GalleryImage } from "../../../content/gallery";
 
-export function ImageGrid() {
-  const [active, setActive] = useState<number | null>(null);
+/** Seconds between each photo starting its rise. */
+const WAVE_STEP = 0.08;
 
+type ImageGridProps = {
+  /** The act currently selected — used to key the wave animation. */
+  act: string;
+  images: GalleryImage[];
+  selected: GalleryImage | null;
+  onSelect: (image: GalleryImage) => void;
+};
+
+export function ImageGrid({ act, images, selected, onSelect }: ImageGridProps) {
   return (
     <div className="flex flex-col gap-[60px] lg:flex-row lg:items-start lg:justify-between">
-      {/* Left: the stepped photo column */}
+      {/* ── Left: the stepped photo column ───────────────────── */}
       <div className="flex w-full flex-col gap-[12px] lg:w-[680px]">
-        {galleryImages.map((image, i) => {
-          const number = String(i + 1).padStart(2, "0");
-          const isRight = image.align === "right";
-
-          return (
-            <Reveal key={image.src} delay={0.05} distance={32}>
-              <div
-                className={`flex items-start gap-[20px] ${
-                  isRight ? "justify-end" : "justify-start"
-                }`}
-                style={
-                  image.indent
-                    ? { paddingLeft: `min(${image.indent}px, 6vw)` }
-                    : undefined
-                }
-                onMouseEnter={() => setActive(i)}
-                onMouseLeave={() => setActive(null)}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={act}
+            className="flex flex-col gap-[12px]"
+            initial="hidden"
+            animate="shown"
+            exit="gone"
+          >
+            {images.length === 0 ? (
+              <motion.p
+                variants={{
+                  hidden: { opacity: 0 },
+                  shown: { opacity: 1 },
+                  gone: { opacity: 0 },
+                }}
+                className="font-sc text-(length:--text-base) tracking-design text-muted"
               >
-                {isRight ? (
-                  <span className="mt-[2px] shrink-0 text-[23.985px] leading-none">
-                    {number}
-                  </span>
-                ) : null}
+                No photos from this one yet.
+              </motion.p>
+            ) : null}
 
-                <div
-                  className="relative shrink-0 overflow-hidden"
-                  style={{
-                    width: `min(${image.width}px, 68vw)`,
-                    aspectRatio: `${image.width} / ${image.height}`,
+            {images.map((image, i) => {
+              const number = String(i + 1).padStart(2, "0");
+              const isRight = image.align === "right";
+              const isActive = selected?.src === image.src;
+
+              return (
+                <motion.div
+                  key={image.src}
+                  variants={{
+                    hidden: { opacity: 0, y: 44 },
+                    shown: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: 0.75,
+                        delay: i * WAVE_STEP,
+                        ease: [0.16, 1, 0.3, 1],
+                      },
+                    },
+                    gone: {
+                      opacity: 0,
+                      y: -20,
+                      transition: { duration: 0.3, ease: "easeIn" },
+                    },
                   }}
+                  className={`flex items-start gap-[20px] ${
+                    isRight ? "justify-end" : "justify-start"
+                  }`}
+                  style={
+                    image.indent
+                      ? { paddingLeft: `min(${image.indent}px, 6vw)` }
+                      : undefined
+                  }
                 >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="(max-width: 1024px) 68vw, 450px"
-                    className="object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] hover:scale-[1.03]"
-                  />
-                </div>
+                  {isRight ? (
+                    <span
+                      className={`mt-[2px] shrink-0 text-[23.985px] leading-none transition-colors duration-300 ${
+                        isActive ? "text-ink" : "text-muted"
+                      }`}
+                    >
+                      {number}
+                    </span>
+                  ) : null}
 
-                {!isRight ? (
-                  <span className="mt-[2px] shrink-0 text-[23.985px] leading-none">
-                    {number}
-                  </span>
-                ) : null}
-              </div>
-            </Reveal>
-          );
-        })}
+                  <button
+                    type="button"
+                    onClick={() => onSelect(image)}
+                    aria-pressed={isActive}
+                    aria-label={`View ${image.alt}`}
+                    className="relative shrink-0 cursor-pointer overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+                    style={{
+                      width: `min(${image.width}px, 68vw)`,
+                      aspectRatio: `${image.width} / ${image.height}`,
+                    }}
+                  >
+                    <Image
+                      src={image.src}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1024px) 68vw, 450px"
+                      className={`object-cover transition-all duration-700 ease-[var(--ease-out-expo)] hover:scale-[1.03] ${
+                        isActive ? "" : "opacity-80 hover:opacity-100"
+                      }`}
+                    />
+                  </button>
+
+                  {!isRight ? (
+                    <span
+                      className={`mt-[2px] shrink-0 text-[23.985px] leading-none transition-colors duration-300 ${
+                        isActive ? "text-ink" : "text-muted"
+                      }`}
+                    >
+                      {number}
+                    </span>
+                  ) : null}
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Right: detail panel */}
-      <Reveal className="hidden lg:block">
-        <div className="sticky top-[120px] flex size-[563px] items-end bg-field p-[24px]">
-          {active !== null ? (
-            <p className="font-sc text-(length:--text-caption) tracking-design text-ink">
-              {String(active + 1).padStart(2, "0")} — {galleryImages[active].alt}
-            </p>
-          ) : null}
+      {/* ── Right: the viewing panel, with its caption below ──── */}
+      <div className="hidden lg:block">
+        <div className="sticky top-[120px] w-[563px]">
+          <div className="relative size-[563px] overflow-hidden bg-field">
+            <AnimatePresence mode="wait">
+              {selected ? (
+                <motion.div
+                  key={selected.src}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Image
+                    src={selected.src}
+                    alt={selected.alt}
+                    fill
+                    sizes="563px"
+                    /* contain, so the whole photo is visible in the square */
+                    className="object-contain"
+                  />
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+          </div>
+
+          {/* Caption: below the panel, flush with its left edge */}
+          <div className="mt-[16px] min-h-[34px] text-left">
+            <AnimatePresence mode="wait">
+              {selected ? (
+                <motion.p
+                  key={selected.src}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="max-w-[563px] font-sc text-(length:--text-caption) tracking-design text-ink"
+                >
+                  {String(
+                    images.findIndex((i) => i.src === selected.src) + 1,
+                  ).padStart(2, "0")}
+                  {" — "}
+                  {selected.alt}
+                </motion.p>
+              ) : null}
+            </AnimatePresence>
+          </div>
         </div>
-      </Reveal>
+      </div>
     </div>
   );
 }

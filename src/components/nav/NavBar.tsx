@@ -3,14 +3,19 @@
 /**
  * NAV BAR
  * ─────────────────────────────────────────────────────────────
- * Logo left, page name beside it, hamburger right. Sits on every page.
+ * Logo left, page name in the second column, hamburger far right.
+ * Sits fixed on every page.
+ *
+ * ⚠ THE SECOND COLUMN IS FIXED AT 350px.
+ * That is 25.36% of the 1380px content frame, straight from the Figma
+ * file. The page name AND the open menu's links both sit in it, so they
+ * line up exactly as you open and close the menu. If you change
+ * NAV_COLUMN here, change it in MenuOverlay too — or better, keep them
+ * both reading this constant.
  *
  * `theme` controls the colour:
  *   "light" — black text, for pages with a white background
- *   "dark"  — white text, for the full-bleed home page hero
- *
- * `pageName` is the word next to the logo ("EVENTS", "GALLERY"). Leave
- * it out on the home page, as designed.
+ *   "dark"  — white text, for the home page video
  */
 
 import Link from "next/link";
@@ -18,6 +23,9 @@ import { useState } from "react";
 import { site } from "../../../content/site";
 import { MenuIcon } from "./MenuIcon";
 import { MenuOverlay } from "./MenuOverlay";
+
+/** Left offset of the second column, inside the content frame. */
+export const NAV_COLUMN = 350;
 
 type NavBarProps = {
   pageName?: string;
@@ -37,17 +45,22 @@ export function NavBar({ pageName, theme = "light" }: NavBarProps) {
       <header
         className={`fixed inset-x-0 top-0 z-50 px-(--spacing-gutter) py-(--spacing-gutter) ${tone} transition-colors duration-300`}
       >
-        <div className="flex items-start justify-between">
-          <div className="flex items-baseline gap-[110px]">
+        <div className="mx-auto flex w-full max-w-(--container-frame) items-start justify-between">
+          <div
+            className="grid items-start"
+            style={{ gridTemplateColumns: `${NAV_COLUMN}px auto` }}
+          >
             <Link
               href="/"
-              className="text-(length:--text-heading) uppercase leading-[0.9] tracking-design"
+              className="text-(length:--text-heading) leading-[0.9] uppercase tracking-design"
             >
               {site.name}
             </Link>
 
-            {pageName ? (
-              <span className="text-(length:--text-heading) uppercase leading-[0.9] tracking-design">
+            {/* Hidden while the menu is open — the menu's own list takes
+                this column, so the two must not overlap. */}
+            {pageName && !open ? (
+              <span className="text-(length:--text-heading) leading-[0.9] uppercase tracking-design">
                 {pageName}
               </span>
             ) : null}
@@ -58,7 +71,7 @@ export function NavBar({ pageName, theme = "light" }: NavBarProps) {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
-            className="cursor-pointer p-1 -m-1"
+            className="-m-1 cursor-pointer p-1"
           >
             <MenuIcon open={open} />
           </button>
