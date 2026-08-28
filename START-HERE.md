@@ -33,10 +33,22 @@ It has:
 Three things must be sorted before you put this in front of the public.
 None are hard. All of them matter.
 
-**1. Tickets are not connected.** Every event needs a **Ticket link**
-added in the admin, pointing at wherever you actually sell. Until then
-the page says "TICKETS ON SALE SOON" — which is honest, but it is not
-selling anything.
+**1. Tickets are not connected — and the checkout on the event pages
+is a MOCK-UP.**
+
+The full three-step checkout is there so you can see the design, but
+it **cannot take money**. It carries a black banner reading *"PREVIEW —
+TICKET SALES ARE NOT CONNECTED YET"* so nobody is misled, and the
+payment step refuses everything.
+
+**You have to set this up.** Pick a ticketing platform, then paste each
+event's **Ticket link** into the admin. The moment you do, that event's
+mock checkout disappears and is replaced by a GET TICKETS button that
+sends people to the real thing.
+
+⚠ **Do not delete the banner to make the page look finished.** It is
+the only thing standing between a stranger and the belief that they
+have bought a ticket.
 
 **2. Real terms and conditions.** The `/terms` page is placeholder text
 that literally says terms go here. You are selling entry to a licensed
@@ -53,12 +65,18 @@ placeholder, not real:
 
 ### Already handled for you
 
-The log-in, my-tickets and view-ticket pages are **switched off**. They
-were designed but there is no real account system behind them, and a
-fake login showing what looks like a valid ticket is worse than no
-login at all. The designs are still in the project; they just do not
-answer to the public. Leave them off until accounts genuinely exist —
-and if you sell through an outside platform, you will never need them.
+The **log-in page is live** — it is good design and there is no harm
+in it. Anyone who tries to sign in gets an honest message saying
+accounts are not set up yet and pointing them at their confirmation
+email. It signs nobody in. Like the checkout, it is a mock-up you would
+need to build out properly if you ever wanted real accounts.
+
+The **my-tickets, register and view-ticket pages are switched off**.
+Those were the problem: the old login let anyone through to a page
+showing what looked like a valid ticket for your door. The designs are
+still in the project; they just do not answer to the public. Leave them
+off until accounts genuinely exist — and if you sell through an outside
+platform, you will never need them.
 
 ---
 

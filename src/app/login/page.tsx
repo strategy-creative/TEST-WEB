@@ -5,8 +5,14 @@
  * column, then EMAIL / PASSWORD rows with the field pushed right, and
  * the LOGIN button aligned under them.
  *
- * ⚠ NO AUTHENTICATION IS WIRED UP. The form does not sign anyone in,
- * and it must not be made to until there is a real account system.
+ * ⚠ NO AUTHENTICATION IS WIRED UP, ON PURPOSE.
+ * The page is public because the design is worth showing. The form
+ * accepts input and then tells the truth: there is no account system
+ * yet. It signs nobody in and goes nowhere.
+ *
+ * The my-tickets, register and view-ticket pages ARE switched off —
+ * they showed plausible-looking ticket references to anyone who
+ * "logged in". See src/lib/accounts.ts.
  *
  * If ticketing runs through an external platform — which is the
  * recommendation — buyers manage their tickets on that platform and
@@ -17,31 +23,37 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { NavBar } from "@/components/nav/NavBar";
-import { startPreviewSession } from "@/lib/session";
 import { Footer } from "@/components/layout/Footer";
 import { Frame } from "@/components/layout/Frame";
 import { Reveal } from "@/components/motion/Reveal";
-import { notFound } from "next/navigation";
-import { accountsEnabled } from "@/lib/accounts";
 
 export default function LoginPage() {
-  // ⚠ Off unless accounts are genuinely built. See src/lib/accounts.ts.
-  if (!accountsEnabled) notFound();
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     /*
-     * ⚠ NOTHING IS CHECKED HERE. This flips a flag in the browser so
-     * the signed-in screens can be reviewed, then sends you to them.
-     * It is not a login. See src/lib/session.ts.
+     * ⚠ THIS MUST NOT SIGN ANYONE IN, AND THAT IS THE WHOLE POINT.
+     *
+     * The page is live because the design is worth showing. The form
+     * is honest because there is no account system behind it: it says
+     * so, and it goes nowhere.
+     *
+     * It previously flipped a flag in the browser and sent people to a
+     * My Tickets page with ticket references on it. A stranger could
+     * "sign in" as nobody and be looking at what appeared to be a
+     * valid ticket for the door. Do not restore that behaviour to
+     * "make the page work" — a login that always succeeds is not a
+     * working login.
+     *
+     * When real accounts exist, this is where the real call goes.
      */
-    startPreviewSession();
-    router.push("/my-tickets");
+    setError(
+      "Accounts are not set up yet — your tickets are managed by our ticketing partner. Check the confirmation email you were sent.",
+    );
   };
 
   const fieldClass =
@@ -109,18 +121,19 @@ export default function LoginPage() {
             </div>
 
             {/*
-              Shown on screen, not just in a comment: nobody reviewing
-              this should mistake it for a working login.
-
-              Sits on the left margin, below the form, on one line —
-              deliberately out of the field column so it reads as a note
-              about the page rather than a message about the button.
-              It only holds to one line from sm up; forcing nowrap on a
-              375px phone pushed the page into a horizontal scroll.
+              The honest answer, shown only once someone actually tries.
+              Sits on the left margin, below the form — out of the field
+              column, so it reads as a note about the page rather than a
+              validation message about the button.
             */}
-            <p className="mt-[40px] font-sc text-(length:--text-tiny) tracking-design text-muted-soft sm:whitespace-nowrap">
-              Preview only — no account is created and nothing is checked.
-            </p>
+            {error ? (
+              <p
+                role="alert"
+                className="mt-[40px] max-w-[420px] font-sc text-(length:--text-tiny) leading-[1.5] tracking-design text-ink"
+              >
+                {error}
+              </p>
+            ) : null}
           </form>
         </Reveal>
       </Frame>

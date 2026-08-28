@@ -78,29 +78,25 @@ export function CheckoutPanel({ event }: { event: VenueEvent }) {
     }
 
     /*
-     * ⚠ NO TICKET LINK SET — AND THIS STATE MATTERS.
-     * Previously this fell through to the full three-step checkout,
-     * which cannot take money: a stranger could type their name and
-     * email and reach a payment step that errors. Worse than useless —
-     * they may believe they have bought a ticket.
+     * ⚠ NO TICKET LINK SET — THE CHECKOUT IS A MOCK-UP.
      *
-     * So it says so plainly instead. Set `externalTicketUrl` on the
-     * event in the admin and it becomes a GET TICKETS button.
-     * Do not "restore" the checkout here to make the page look busier.
+     * The three-step flow below is real, working UI, and it is kept
+     * visible on purpose so the design can be seen and reviewed. But
+     * it CANNOT TAKE MONEY: /api/checkout refuses every request.
+     *
+     * So it carries a banner saying exactly that. Without one, a
+     * stranger could fill in their name and email, reach a payment
+     * step that errors, and reasonably believe they had bought a
+     * ticket. The banner is the whole reason this is safe to leave up.
+     *
+     * ⚠ DO NOT REMOVE THE BANNER while the checkout is unconnected.
+     * Set the event's Ticket link in the admin and both the banner and
+     * the mock checkout disappear, replaced by a GET TICKETS button.
      */
-    return (
-      <PanelShell event={event} total={availableTier.price}>
-        <div className="flex h-[237px] flex-col items-center justify-center gap-[12px] border border-dashed border-ink">
-          <span className="font-sc text-(length:--text-body) tracking-design">
-            TICKETS ON SALE SOON
-          </span>
-          <span className="font-sc text-(length:--text-tiny) tracking-design text-muted-soft">
-            Follow us for the on-sale
-          </span>
-        </div>
-      </PanelShell>
-    );
+    // falls through to the checkout below, with `isMockCheckout` set
   }
+
+  const isMockCheckout = provider.mode === "external" && !externalUrl;
 
   /* ── Sold out ──────────────────────────────────────────────── */
   if (soldOut) {
@@ -159,7 +155,7 @@ export function CheckoutPanel({ event }: { event: VenueEvent }) {
   };
 
   return (
-    <PanelShell event={event} total={total}>
+    <PanelShell event={event} total={total} mock={isMockCheckout}>
       <AnimatePresence mode="wait">
         {/* ── STEP 1 — details ──────────────────────────────── */}
         {step === "details" ? (
@@ -320,13 +316,26 @@ function PanelShell({
   event,
   total,
   children,
+  mock = false,
 }: {
   event: VenueEvent;
   total: number;
   children: React.ReactNode;
+  /** No ticket link set — show the "not connected" banner. */
+  mock?: boolean;
 }) {
   return (
     <div className="flex min-h-[833px] w-full flex-col justify-between border border-dashed border-ink p-[25px]">
+      {/*
+        ⚠ The honesty banner. See the note in CheckoutPanel — this is
+        what makes an unconnected checkout safe to leave on a live site.
+      */}
+      {mock ? (
+        <div className="mb-[24px] border border-ink bg-ink px-[16px] py-[10px] font-sc text-(length:--text-tiny) leading-[1.5] tracking-design text-paper">
+          PREVIEW — TICKET SALES ARE NOT CONNECTED YET. Nothing on this
+          form can be purchased. Tickets will be on sale shortly.
+        </div>
+      ) : null}
       {/* Header: date left, location right */}
       <div className="flex flex-col gap-[40px] font-sc text-(length:--text-caption) tracking-design xl:flex-row xl:gap-[162px]">
         <p className="w-[278px] break-words">

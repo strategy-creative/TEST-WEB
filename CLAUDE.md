@@ -215,6 +215,17 @@ variable:
 - `embed` — the platform's widget renders inside the checkout panel.
 - `stripe` — on-site checkout with Stripe's hosted card fields.
 
+### The unconnected checkout is a labelled mock-up
+
+An event with no Ticket link shows the full three-step checkout with a
+black **PREVIEW — TICKET SALES ARE NOT CONNECTED YET** banner. Both are
+deliberate: the venue wanted the design visible, and the banner is what
+makes that safe on a live site.
+
+⚠ **Never remove that banner while the checkout is unconnected**, and
+never "tidy up" the mock checkout into something that looks purchasable.
+Setting the event's Ticket link removes both automatically.
+
 ### Three things that must not happen
 
 1. **Never build plain `<input>` fields for card number, expiry or CVV.**

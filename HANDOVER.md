@@ -46,12 +46,15 @@ These are not bugs. They are decisions waiting on someone.
   refuses every request on purpose. Nothing can be sold yet. This is the
   one real blocker.
 - **Terms** is placeholder text. Real terms are a legal question.
-- **Log in / Register / My Tickets are SWITCHED OFF** behind
-  `NEXT_PUBLIC_ENABLE_ACCOUNTS`, and 404 in production. They are not
-  empty shells — the login accepted any credentials and showed
-  plausible-looking ticket references, which live is worse than
-  nothing. See `src/lib/accounts.ts`. If ticketing runs through an
-  external platform, delete them rather than finishing them.
+- **Log in is public and honest.** The form renders, and submitting it
+  returns an error saying accounts are not set up. It signs nobody in
+  and navigates nowhere.
+- **My Tickets, Register and view-ticket are SWITCHED OFF** behind
+  `NEXT_PUBLIC_ENABLE_ACCOUNTS`, and 404 in production. They were not
+  empty shells — the old login let anyone through to plausible-looking
+  ticket references, which live is worse than nothing. See
+  `src/lib/accounts.ts`. If ticketing runs through an external
+  platform, delete them rather than finishing them.
 - **`/tickets/[id]`** is a shell. A real ticket needs a scannable code
   that is verifiable at the door and cannot be forged or reused — that
   belongs to the ticketing platform, not to this codebase.

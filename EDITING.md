@@ -161,9 +161,19 @@ working version stays live. The site does not go down.
 
 ## The one thing still to do
 
-Ticket sales are **not connected yet**. Until they are, GET TICKETS
-needs a link to wherever you actually sell — put that in the
-**Ticket link** field on each event.
+Ticket sales are **not connected yet**, and this is the job that is
+genuinely yours to finish.
+
+Right now an event with no **Ticket link** shows a checkout that looks
+complete but is a mock-up — it carries a banner saying ticket sales are
+not connected, and it cannot take payment. That is deliberate: it lets
+you see the design without anyone being able to think they have bought
+something.
+
+**Add a Ticket link to an event and that event is done.** The mock
+checkout is replaced by a GET TICKETS button pointing at wherever you
+actually sell. Do that for every event before you tell anyone the site
+is live.
 
 If you have not picked a ticketing platform, Flicket, Humanitix,
 iTicket and Eventbrite all work in New Zealand and handle the payment,
