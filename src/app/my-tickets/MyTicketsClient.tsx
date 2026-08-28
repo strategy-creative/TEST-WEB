@@ -19,12 +19,19 @@ import Link from "next/link";
 import { useSession } from "@/lib/session";
 import { Reveal } from "@/components/motion/Reveal";
 import { EventPlaceholder } from "@/components/events/EventCard";
-import {
-  ticketsWithEvents,
-  TICKETS_GRID_SLOTS,
-} from "../../../content/tickets";
+import type { HeldTicketWithEvent } from "../../../content/types";
 
-export function MyTicketsClient() {
+type MyTicketsClientProps = {
+  /**
+   * ⚠ Passed in from the server page, not imported. content/tickets.ts
+   * reads the content folder off disk; importing it here would pull
+   * node:fs into the browser bundle and break the build.
+   */
+  tickets: HeldTicketWithEvent[];
+  gridSlots: number;
+};
+
+export function MyTicketsClient({ tickets, gridSlots }: MyTicketsClientProps) {
   const { signedIn, ready } = useSession();
 
   // Nothing until we know — avoids a flash of the wrong state.
@@ -46,8 +53,7 @@ export function MyTicketsClient() {
     );
   }
 
-  const tickets = ticketsWithEvents();
-  const placeholders = Math.max(0, TICKETS_GRID_SLOTS - tickets.length);
+  const placeholders = Math.max(0, gridSlots - tickets.length);
 
   return (
     <div className="grid grid-cols-1 gap-x-[20px] gap-y-[60px] sm:grid-cols-2 xl:grid-cols-4">

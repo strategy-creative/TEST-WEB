@@ -11,21 +11,39 @@ broken state to "come back to it later".
 
 ## 1. The rule that matters most
 
-**Almost every routine change is a content change, not a code change.**
+**Almost every routine change is a content change, and the venue makes it
+themselves — through the admin at `/keystatic`, not through you.**
 
-Before editing a component, check whether the thing you want to change lives
-in `/content`:
+| To change…                       | Where                                    |
+| -------------------------------- | ---------------------------------------- |
+| Add / edit / remove an event     | Admin → Events (`content/events/*.json`) |
+| Mark an event sold out           | Admin → Events → Status                  |
+| Ticket prices and tiers          | Admin → Events → Ticket tiers            |
+| Gallery photos                   | Admin → Gallery photos                   |
+| The acts filter row              | Admin → Gallery acts                     |
+| Page title, description, footer  | Admin → Site settings                    |
 
-| To change…                            | Edit this file        |
-| ------------------------------------- | --------------------- |
-| Add / edit / remove an event          | `content/events.ts`   |
-| Mark an event sold out                | `content/events.ts`   |
-| Ticket prices and tiers               | `content/events.ts`   |
-| Gallery photos and the act list       | `content/gallery.ts`  |
-| Venue name, footer links, home labels | `content/site.ts`     |
+If someone asks you to add an event, **point them at the admin** rather than
+editing JSON by hand. Hand-editing works, but it skips the validation that
+stops the layout breaking.
 
-If a request can be satisfied by editing `/content`, do that and stop. Do not
-refactor components to accommodate a content change.
+### The content architecture
+
+```
+content/*.json, content/events/*, content/gallery/*   ← the venue's data
+keystatic.config.ts                                   ← what they can edit
+content/events.ts, gallery.ts, tickets.ts             ← READ those files
+content/types.ts                                      ← shared types
+```
+
+⚠ **`events.ts`, `gallery.ts` and `tickets.ts` are `server-only`.** They read
+the content folder off disk. A client component importing them pulls
+`node:fs` into the browser bundle and **the build fails outright**. Client
+components take content as props and import types from `content/types.ts`.
+This has already bitten once — do not undo it.
+
+`content/site.ts` is the exception: it uses a static JSON import, so it stays
+safe to use from client components.
 
 ---
 
@@ -49,7 +67,28 @@ public/images/      ← photography
 
 ---
 
-## 3. Design rules
+## 3. Changing what the venue can edit
+
+To add a field they can control, all three, in order:
+
+1. `keystatic.config.ts` — the field, with a validation limit
+2. `content/types.ts` — the type
+3. The page component that renders it
+
+Miss any one and it will not appear.
+
+⚠ **The character limits are load-bearing.** Each one is the point where that
+text starts wrapping badly or colliding with something in the Figma layout.
+If a title needs to be longer, **change the layout to cope first**, then raise
+the cap. Raising it alone just moves the breakage to the live site.
+
+Same for the gallery: the admin offers four named shapes, not free width and
+height fields, so the stepped column always resolves to sizes the layout was
+built around.
+
+---
+
+## 4. Design rules
 
 The site is a direct build of a Figma file
 (`Working-Title`, file key `EwBeAjABWPzIW7QOQ5SnPe`). Hold the line on these:
@@ -126,7 +165,7 @@ Never commit "trial" font files. They are not licensed for a live site.
 
 ---
 
-## 4. Animation
+## 5. Animation
 
 All motion lives in `src/components/motion/`. Three pieces:
 
@@ -148,7 +187,7 @@ Every animation respects `prefers-reduced-motion`. Keep it that way.
 
 ---
 
-## 5. Ticketing — the important part
+## 6. Ticketing — the important part
 
 ⚠️ **Read `src/lib/ticketing/index.ts` in full before touching checkout.**
 
@@ -187,7 +226,7 @@ chargebacks. Revisit only if there is a concrete reason.
 
 ---
 
-## 6. Known gaps
+## 7. Known gaps
 
 Things left deliberately unfinished, so nobody "discovers" them as bugs:
 
@@ -207,22 +246,26 @@ Things left deliberately unfinished, so nobody "discovers" them as bugs:
 
 ---
 
-## 7. Deploying
+## 8. Deploying
 
 Push to `main`. Vercel builds and deploys automatically.
 
 ```bash
-npm run dev     # local, http://localhost:3000
+npm run dev     # local, http://localhost:3000 — admin at /keystatic
 npm run build   # must pass before pushing
 npm run lint
 ```
+
+⚠ **Both scripts pass `--webpack` on purpose.** Turbopack panics while
+bundling the Keystatic admin — reproducibly, not as a flake. See
+`BUILD-NOTES.md`. Do not remove the flag to speed the build up.
 
 Always run `npm run build` before pushing. A type error will fail the Vercel
 deploy and take the live site's last good version with it until fixed.
 
 ---
 
-## 8. Working with the venue
+## 9. Working with the venue
 
 - Prefer the smallest change that solves the problem.
 - If asked for something that would break the design system (a new colour, a

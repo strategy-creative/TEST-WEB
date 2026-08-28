@@ -13,7 +13,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { VenueEvent } from "../../../content/events";
+import type { VenueEvent } from "../../../content/types";
 import { SoldOutBlock } from "./SoldOutBlock";
 
 function EventInfo({ event }: { event: VenueEvent }) {

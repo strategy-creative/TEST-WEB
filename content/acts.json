@@ -1,0 +1,32 @@
+{
+  "acts": [
+    {
+      "name": "OUR SOUND",
+      "isDefault": false
+    },
+    {
+      "name": "DISCO",
+      "isDefault": true
+    },
+    {
+      "name": "Smoke & Dart",
+      "isDefault": false
+    },
+    {
+      "name": "CALEB JACKSON",
+      "isDefault": false
+    },
+    {
+      "name": "Interlude",
+      "isDefault": false
+    },
+    {
+      "name": "Gordoandteej",
+      "isDefault": false
+    },
+    {
+      "name": "Flatmate",
+      "isDefault": false
+    }
+  ]
+}

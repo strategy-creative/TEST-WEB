@@ -16,7 +16,8 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000>. Changes appear as you save.
+Open <http://localhost:3000>. The admin is at
+<http://localhost:3000/keystatic> — running locally it needs no login.
 
 ```bash
 npm run build   # check it compiles — always do this before pushing
@@ -27,42 +28,39 @@ npm run lint
 
 ## Making changes
 
-**Nearly everything you will want to change is in the `content` folder.**
-You do not need to touch any code to run the site day to day.
+**Everything the venue changes day to day is done in the admin at
+`/keystatic`** — events, prices, sold-out signs, gallery photos. No code, no
+terminal. See `EDITING.md` for the walkthrough written for the venue.
+
+The sections below describe what those admin changes write to, for anyone
+working on the code.
 
 ### Add an event
 
-Open `content/events.ts`. Copy one of the existing blocks, paste it at the top
-of the list, and change the details:
-
-```ts
-{
-  slug: "friday-night-fever",        // becomes the web address — must be unique
-  title: "FRIDAY NIGHT FEVER",
-  status: "on-sale",
-  image: "/images/friday-night.jpg", // put the file in public/images first
-  dateLabel: "FRIDAY 3RD OCTOBER,2026",
-  fromPrice: 20,
-  // …the rest
-}
-```
-
-Save, then push. The event is live in about a minute.
+Admin → **Events** → **Add**. Each event is written to
+`content/events/<slug>.json`; the poster lands in `public/images/events/`.
 
 ### Mark an event sold out
 
-Change one word:
-
-```ts
-status: "sold-out",
-```
-
-The card is crossed out and stops being clickable. Nothing else to do.
+Admin → the event → **Status** → **Sold out**. The card is crossed out and
+stops being clickable.
 
 ### Add a photo to the gallery
 
-Put the image in `public/images/`, then add a block to `content/gallery.ts`.
-The 01 / 02 / 03 numbering updates itself.
+Admin → **Gallery photos** → **Add**. Pick a shape and a side; the 01 / 02 /
+03 numbering updates itself. Photos go to `public/images/gallery/`.
+
+### Where it all lands
+
+```
+content/events/*.json    one file per event
+content/gallery/*.json   one file per photo
+content/acts.json        the gallery filter row
+content/site-settings.json
+```
+
+`content/events.ts`, `gallery.ts` and `tickets.ts` read those files and hand
+typed data to the pages. They are `server-only` — see `CLAUDE.md`.
 
 ### Change the venue name, footer links or home page labels
 
@@ -135,6 +133,8 @@ Good things to ask for:
 ## Still to do
 
 - Pick a ticketing platform and wire it up (above)
+- Switch Keystatic to GitHub storage so the venue can edit the live site
+  (`keystatic.config.ts` → `storage`; see `EDITING.md`)
 - Real terms and conditions on `/terms`
 - Decide whether Log in / Register are needed at all — if ticketing is
   external, probably not

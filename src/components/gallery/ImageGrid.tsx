@@ -19,7 +19,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import type { GalleryImage } from "../../../content/gallery";
+import type { GalleryImage } from "../../../content/types";
 
 /** Seconds between each photo starting its rise. */
 const WAVE_STEP = 0.08;

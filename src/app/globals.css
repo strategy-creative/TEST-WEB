@@ -135,6 +135,23 @@ optgroup {
   text-transform: inherit;
 }
 
+/*
+ * ⚠ THE ADMIN OPTS OUT OF THE SITE'S TYPE RULES.
+ * /keystatic renders inside the site's root layout, so it inherits the
+ * uppercase rule and Fragment Mono — which turned the whole CMS into
+ * shouty monospace. This resets it for that subtree only. Both
+ * properties inherit, so setting them on the wrapper is enough.
+ */
+.admin-root {
+  text-transform: none;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  line-height: normal;
+}
+
 /* The design tracks type tightly at every size. */
 .tracking-design {
   letter-spacing: -0.01em;

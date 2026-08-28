@@ -1,0 +1,54 @@
+{
+  "title": "OUR SOUND 05",
+  "subtitle": "",
+  "status": "on-sale",
+  "image": "/images/events/event-our-sound-05.jpg",
+  "imageAlt": "The UNIT/20 dancefloor from behind the booth",
+  "date": "2026-09-19",
+  "dateLabel": "SATURDAY 19TH SEPTEMBER,2026",
+  "timeLabel": "9:00PM - LATE",
+  "doorsLabel": "21:00 - 2:00",
+  "location": "UNIT/20, CHRISTCHURCH",
+  "fromPrice": 25,
+  "tiers": [
+    {
+      "name": "EARLY BIRD",
+      "price": 25,
+      "status": "available"
+    },
+    {
+      "name": "2ND RELEASE",
+      "price": 30,
+      "status": "sold-out"
+    },
+    {
+      "name": "FINAL RELEASE",
+      "price": 35,
+      "status": "sold-out"
+    }
+  ],
+  "externalTicketUrl": null,
+  "description": "We're super stoked to be taking over Unit 20 with an insanely stacked lineup for you all. For this momentous occasion, we thought to bring down Poneke-based, multi-genre selecta, Licious. The night will be filled with increasing tempos and a plethora of club music and will have you dancing till your last dart. We have curated the rest of the lineup with some of the best producers/DJs the 03 has to offer.",
+  "lineup": [
+    {
+      "name": "Djeru",
+      "time": "8 - 9"
+    },
+    {
+      "name": "Bkay",
+      "time": "9 - 10"
+    },
+    {
+      "name": "Ballie",
+      "time": "10 - 11:15"
+    },
+    {
+      "name": "Licious",
+      "time": "11:15 - 12:45"
+    },
+    {
+      "name": "Texture's",
+      "time": "12:45 - 1:30"
+    }
+  ]
+}

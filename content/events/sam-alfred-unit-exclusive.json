@@ -1,0 +1,28 @@
+{
+  "title": "SAM ALFRED",
+  "subtitle": "UNIT EXCLUSIVE",
+  "status": "sold-out",
+  "image": "/images/events/event-sam-alfred.jpg",
+  "imageAlt": "Sam Alfred portrait",
+  "date": "2026-09-19",
+  "dateLabel": "SATURDAY 19TH SEPTEMBER,2026",
+  "timeLabel": "9:00PM - LATE",
+  "doorsLabel": "21:00 - 2:00",
+  "location": "UNIT/20, CHRISTCHURCH",
+  "fromPrice": 50,
+  "tiers": [
+    {
+      "name": "GENERAL ADMISSION",
+      "price": 50,
+      "status": "sold-out"
+    }
+  ],
+  "externalTicketUrl": null,
+  "description": "A one-off UNIT exclusive. Limited capacity, no door sales.",
+  "lineup": [
+    {
+      "name": "Sam Alfred",
+      "time": "10 - 2"
+    }
+  ]
+}

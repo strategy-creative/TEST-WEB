@@ -3,6 +3,7 @@ import { NavBar } from "@/components/nav/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { Frame } from "@/components/layout/Frame";
 import { Gallery } from "@/components/gallery/Gallery";
+import { acts, galleryImages, defaultAct } from "../../../content/gallery";
 
 export const metadata: Metadata = {
   title: "Gallery — UNIT/20",
@@ -15,7 +16,11 @@ export default function GalleryPage() {
       <NavBar pageName="GALLERY" />
 
       <Frame as="main" className="pt-[226px]">
-        <Gallery />
+        <Gallery
+          acts={acts}
+          images={galleryImages}
+          initialAct={defaultAct()}
+        />
       </Frame>
 
       <Footer />

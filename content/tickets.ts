@@ -11,15 +11,11 @@
  * store here. See CLAUDE.md → Ticketing.
  */
 
-import { events, type VenueEvent } from "./events";
+import "server-only";
+import { events } from "./events";
+import type { HeldTicket, HeldTicketWithEvent } from "./types";
 
-export type HeldTicket = {
-  /** Reference shown on the ticket. Comes from the platform. */
-  reference: string;
-  /** Which event it is for — must match a slug in content/events.ts. */
-  eventSlug: string;
-  quantity: number;
-};
+export type { HeldTicket, HeldTicketWithEvent } from "./types";
 
 export const heldTickets: HeldTicket[] = [
   {
@@ -31,7 +27,7 @@ export const heldTickets: HeldTicket[] = [
 ];
 
 /** The events those tickets are for, in the order held. */
-export function ticketsWithEvents(): Array<HeldTicket & { event: VenueEvent }> {
+export function ticketsWithEvents(): HeldTicketWithEvent[] {
   return heldTickets.flatMap((ticket) => {
     const event = events.find((e) => e.slug === ticket.eventSlug);
     return event ? [{ ...ticket, event }] : [];

@@ -18,6 +18,10 @@ import { NavBar } from "@/components/nav/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { Frame } from "@/components/layout/Frame";
 import { MyTicketsClient } from "./MyTicketsClient";
+import {
+  ticketsWithEvents,
+  TICKETS_GRID_SLOTS,
+} from "../../../content/tickets";
 
 export const metadata: Metadata = {
   title: "My tickets — UNIT/20",
@@ -35,7 +39,10 @@ export default function MyTicketsPage() {
         than a stub with a footer stuck under it.
       */}
       <Frame as="main" className="min-h-svh pt-[226px]">
-        <MyTicketsClient />
+        <MyTicketsClient
+          tickets={ticketsWithEvents()}
+          gridSlots={TICKETS_GRID_SLOTS}
+        />
       </Frame>
 
       <Footer />

@@ -7,27 +7,39 @@ export type NavLink = {
 
 /**
  * SITE SETTINGS
- * ─────────────────────────────────────────────────────────────
- * Venue-wide details. Change things here, not in the components.
- * Everything in this file is safe to edit.
+ * ═════════════════════════════════════════════════════════════
+ * The venue-editable settings — page title, description, the location
+ * line and the copyright — live in content/site-settings.json and are
+ * edited in the admin at /keystatic under "Site settings".
+ *
+ * Everything else here (links, the hero video paths) is structure
+ * rather than copy, so it stays in code. Change a link and the route
+ * has to exist; that is a developer change, not a content one.
  */
+
+/*
+ * ⚠ A STATIC IMPORT, not a file read. This module is used by client
+ * components (the nav, the footer, the loader), so it must never touch
+ * node:fs — that drags the filesystem into the browser bundle and the
+ * build fails. JSON imports are bundled safely on both sides.
+ */
+import settings from "./site-settings.json";
 
 export const site = {
   /** Shown as the logo, top-left of every page. */
   name: "UNIT/20",
 
-  /** Browser tab title + search results. */
-  title: "UNIT/20 — Christchurch",
-  description:
-    "UNIT/20 is a club and live venue in Christchurch, New Zealand. Events, tickets and gallery.",
+  /** Browser tab title + search results. Edited in the admin. */
+  title: settings.title,
+  description: settings.description,
 
   hero: {
     /**
      * Location line. No longer shown on the home page — it now appears
      * along the bottom of the open menu overlay.
      */
-    centre: "CHRISTCHURCH,NZ",
-    right: "-43.5374 /172.6410",
+    centre: settings.locationLabel,
+    right: settings.coordinates,
     /**
      * Full-bleed background video. Shown on screens 768px and wider.
      * See src/components/home/HeroVideo.tsx before replacing it —
@@ -54,8 +66,8 @@ export const site = {
     { label: "TERMS", href: "/terms" },
   ] as NavLink[],
 
-  /** Bottom-right of the footer. */
-  copyright: "ALL RIGHTS RESERVED @UNIT20",
+  /** Bottom-right of the footer. Edited in the admin. */
+  copyright: settings.copyright,
 
   /**
    * Links in the full-screen menu overlay (the hamburger).

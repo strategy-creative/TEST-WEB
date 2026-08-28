@@ -4,46 +4,54 @@
  * GALLERY
  * ─────────────────────────────────────────────────────────────
  * Holds the two pieces of state the gallery page needs — which act is
- * selected, and which photo is open in the panel — and hands them to
- * the acts line and the grid.
+ * selected, and which photo is open in the panel.
+ *
+ * ⚠ It takes its data as PROPS rather than importing the content
+ * module. content/gallery.ts reads the content folder off disk, which
+ * only works on the server; importing it from a client component pulls
+ * node:fs into the browser bundle and the build fails. The page reads
+ * the content and hands it down.
  *
  * Choosing a new act moves the panel to that act's first photo, so the
  * panel is never left showing something that is no longer on screen.
- *
- * Everything shown here comes from content/gallery.ts.
  */
 
 import { useMemo, useState } from "react";
-import {
-  defaultAct,
-  imagesForAct,
-  type GalleryImage,
-} from "../../../content/gallery";
+import type { Act, GalleryImage } from "../../../content/types";
 import { ActsLine } from "./ActsLine";
 import { ImageGrid } from "./ImageGrid";
 
-export function Gallery() {
-  const [act, setAct] = useState<string>(defaultAct);
+type GalleryProps = {
+  acts: Act[];
+  images: GalleryImage[];
+  initialAct: string;
+};
 
-  const images = useMemo(() => imagesForAct(act), [act]);
+export function Gallery({ acts, images, initialAct }: GalleryProps) {
+  const [act, setAct] = useState<string>(initialAct);
+
+  const shown = useMemo(
+    () => images.filter((image) => image.acts.includes(act)),
+    [images, act],
+  );
 
   const [selected, setSelected] = useState<GalleryImage | null>(
-    () => imagesForAct(defaultAct())[0] ?? null,
+    () => images.find((i) => i.acts.includes(initialAct)) ?? null,
   );
 
   const chooseAct = (next: string) => {
     setAct(next);
-    setSelected(imagesForAct(next)[0] ?? null);
+    setSelected(images.find((i) => i.acts.includes(next)) ?? null);
   };
 
   return (
     <>
-      <ActsLine selected={act} onSelect={chooseAct} />
+      <ActsLine acts={acts} selected={act} onSelect={chooseAct} />
 
       <div className="mt-[127px]">
         <ImageGrid
           act={act}
-          images={images}
+          images={shown}
           selected={selected}
           onSelect={setSelected}
         />

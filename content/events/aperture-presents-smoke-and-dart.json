@@ -1,0 +1,54 @@
+{
+  "title": "APERTURE PRESENTS:",
+  "subtitle": "SMOKE & DART",
+  "status": "on-sale",
+  "image": "/images/events/event-smoke-and-dart.jpg",
+  "imageAlt": "Crowd bathed in red light at UNIT/20",
+  "date": "2026-09-19",
+  "dateLabel": "SATURDAY 19TH SEPTEMBER,2026",
+  "timeLabel": "9:00PM - LATE",
+  "doorsLabel": "21:00 - 2:00",
+  "location": "UNIT/20, CHRISTCHURCH",
+  "fromPrice": 25,
+  "tiers": [
+    {
+      "name": "EARLY BIRD",
+      "price": 25,
+      "status": "available"
+    },
+    {
+      "name": "2ND RELEASE",
+      "price": 30,
+      "status": "sold-out"
+    },
+    {
+      "name": "FINAL RELEASE",
+      "price": 35,
+      "status": "sold-out"
+    }
+  ],
+  "externalTicketUrl": null,
+  "description": "Aperture take over UNIT/20 for a night of low-slung house and after-hours disco. Doors at nine, no re-entry after midnight.",
+  "lineup": [
+    {
+      "name": "Djeru",
+      "time": "8 - 9"
+    },
+    {
+      "name": "Bkay",
+      "time": "9 - 10"
+    },
+    {
+      "name": "Ballie",
+      "time": "10 - 11:15"
+    },
+    {
+      "name": "Licious",
+      "time": "11:15 - 12:45"
+    },
+    {
+      "name": "Texture's",
+      "time": "12:45 - 1:30"
+    }
+  ]
+}

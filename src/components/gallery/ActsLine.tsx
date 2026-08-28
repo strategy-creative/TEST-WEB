@@ -11,17 +11,18 @@
  *   selected       black       (--color-ink)
  *
  * One act is always selected — there is no "show everything" state, by
- * design. Names come from content/gallery.ts → acts.
+ * design. The acts come in as a prop; the page reads them.
  */
 
-import { acts } from "../../../content/gallery";
+import type { Act } from "../../../content/types";
 
 type ActsLineProps = {
+  acts: Act[];
   selected: string;
   onSelect: (act: string) => void;
 };
 
-export function ActsLine({ selected, onSelect }: ActsLineProps) {
+export function ActsLine({ acts, selected, onSelect }: ActsLineProps) {
   return (
     <h1 className="flex flex-wrap items-baseline gap-x-[0.55em] gap-y-[0.15em] text-[clamp(2rem,5.1vw,73.333px)] leading-[1.1] uppercase tracking-[-0.03em]">
       {acts.map((act, i) => {

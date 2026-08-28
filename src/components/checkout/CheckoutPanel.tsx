@@ -18,7 +18,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import type { VenueEvent } from "../../../content/events";
+import type { VenueEvent } from "../../../content/types";
 import { getProvider } from "@/lib/ticketing/providers";
 import { QuantityStepper } from "./QuantityStepper";
 import { Field } from "./Field";
