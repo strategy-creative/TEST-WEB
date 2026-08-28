@@ -76,7 +76,7 @@ of the video on purpose, to save people's mobile data.
 ### A note on capitals
 
 The site sets Fragment Mono in all caps everywhere, automatically. Type
-event titles however you like in `content/events.ts` — they come out
+event titles however you like in the admin — they come out
 uppercase either way.
 
 ---
@@ -97,7 +97,7 @@ Once you have picked one:
 1. In Vercel → Settings → Environment Variables, set
    `NEXT_PUBLIC_TICKETING_MODE` to `external`.
 2. Add each event's ticket link as `externalTicketUrl` in
-   `content/events.ts`.
+   the admin at `/keystatic`.
 
 That is the whole integration. See `CLAUDE.md` section 5 for the other two
 modes and the reasoning.

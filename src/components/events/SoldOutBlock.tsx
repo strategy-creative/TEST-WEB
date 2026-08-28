@@ -4,7 +4,8 @@
  * A dashed box crossed corner to corner with SOLD OUT across the middle.
  *
  * Shown automatically when an event has  status: "sold-out"  in
- * content/events.ts. The card is NOT a link when this shows, so it
+ * the admin (content/events/*.json). The card is NOT a link when this
+ * shows, so it
  * cannot be clicked through to a checkout that would fail.
  */
 

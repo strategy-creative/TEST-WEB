@@ -56,18 +56,47 @@ export function CheckoutPanel({ event }: { event: VenueEvent }) {
     event.externalTicketUrl,
   );
 
-  if (provider.mode === "external" && externalUrl) {
+  if (provider.mode === "external") {
+    /*
+     * ⚠ A ticket link is set — send them to the platform.
+     */
+    if (externalUrl) {
+      return (
+        <PanelShell event={event} total={availableTier.price}>
+          <div className="flex h-[237px] items-center justify-center border border-dashed border-ink">
+            <a
+              href={externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-ink px-[41px] py-[8px] font-sc text-(length:--text-body) tracking-design text-paper transition-opacity duration-200 hover:opacity-80"
+            >
+              GET TICKETS &gt;
+            </a>
+          </div>
+        </PanelShell>
+      );
+    }
+
+    /*
+     * ⚠ NO TICKET LINK SET — AND THIS STATE MATTERS.
+     * Previously this fell through to the full three-step checkout,
+     * which cannot take money: a stranger could type their name and
+     * email and reach a payment step that errors. Worse than useless —
+     * they may believe they have bought a ticket.
+     *
+     * So it says so plainly instead. Set `externalTicketUrl` on the
+     * event in the admin and it becomes a GET TICKETS button.
+     * Do not "restore" the checkout here to make the page look busier.
+     */
     return (
       <PanelShell event={event} total={availableTier.price}>
-        <div className="flex h-[237px] items-center justify-center border border-dashed border-ink">
-          <a
-            href={externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-ink px-[41px] py-[8px] font-sc text-(length:--text-body) tracking-design text-paper transition-opacity duration-200 hover:opacity-80"
-          >
-            GET TICKETS &gt;
-          </a>
+        <div className="flex h-[237px] flex-col items-center justify-center gap-[12px] border border-dashed border-ink">
+          <span className="font-sc text-(length:--text-body) tracking-design">
+            TICKETS ON SALE SOON
+          </span>
+          <span className="font-sc text-(length:--text-tiny) tracking-design text-muted-soft">
+            Follow us for the on-sale
+          </span>
         </div>
       </PanelShell>
     );

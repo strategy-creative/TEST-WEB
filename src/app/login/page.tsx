@@ -23,8 +23,12 @@ import { startPreviewSession } from "@/lib/session";
 import { Footer } from "@/components/layout/Footer";
 import { Frame } from "@/components/layout/Frame";
 import { Reveal } from "@/components/motion/Reveal";
+import { notFound } from "next/navigation";
+import { accountsEnabled } from "@/lib/accounts";
 
 export default function LoginPage() {
+  // ⚠ Off unless accounts are genuinely built. See src/lib/accounts.ts.
+  if (!accountsEnabled) notFound();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

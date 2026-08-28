@@ -9,13 +9,18 @@
  * ticket format here. See CLAUDE.md → Ticketing.
  */
 
+import { notFound } from "next/navigation";
 import { SimplePage } from "@/components/layout/SimplePage";
+import { accountsEnabled } from "@/lib/accounts";
 
 export default async function TicketPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  // ⚠ Off unless accounts are genuinely built. See src/lib/accounts.ts.
+  if (!accountsEnabled) notFound();
+
   const { id } = await params;
 
   return (

@@ -17,7 +17,9 @@ import type { Metadata } from "next";
 import { NavBar } from "@/components/nav/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { Frame } from "@/components/layout/Frame";
+import { notFound } from "next/navigation";
 import { MyTicketsClient } from "./MyTicketsClient";
+import { accountsEnabled } from "@/lib/accounts";
 import {
   ticketsWithEvents,
   TICKETS_GRID_SLOTS,
@@ -29,6 +31,8 @@ export const metadata: Metadata = {
 };
 
 export default function MyTicketsPage() {
+  // ⚠ Off unless accounts are genuinely built. See src/lib/accounts.ts.
+  if (!accountsEnabled) notFound();
   return (
     <>
       <NavBar pageName="MY TICKETS" />

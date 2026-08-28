@@ -1,10 +1,16 @@
 # UNIT/20 — project status
 
-**Last worked on:** 27 August 2026
-**Live:** https://samuel-test.vercel.app
-**Repo:** https://github.com/strategy-creative/TEST-WEB
-**Vercel project:** `samuel-test` (Strategy Creative team) — deploys on every push to `main`
-**Designed by:** Samuel Ames, Strategy Creative
+**Last worked on:** 28 August 2026
+**Designed and built by:** Samuel Ames, Strategy Creative
+
+⚠ **The addresses below are the DESIGNER'S working copy, not the
+venue's.** They are recorded for reference only. The venue creates its
+own GitHub repo and its own Vercel project and owns them outright —
+nothing in this handover depends on the accounts below.
+
+- Designer's preview: https://samuel-test.vercel.app
+- Designer's repo: https://github.com/strategy-creative/TEST-WEB
+- Designer's Vercel project: `samuel-test` (Strategy Creative team)
 **Built from:** Figma file `Working-Title` (`EwBeAjABWPzIW7QOQ5SnPe`)
 
 This file is the state of play. `README.md` is for the venue — how to run
@@ -40,14 +46,17 @@ These are not bugs. They are decisions waiting on someone.
   refuses every request on purpose. Nothing can be sold yet. This is the
   one real blocker.
 - **Terms** is placeholder text. Real terms are a legal question.
-- **Log in / Register** are empty shells. If ticketing runs through an
-  external platform, buyers manage tickets there and these pages should
-  probably be deleted.
+- **Log in / Register / My Tickets are SWITCHED OFF** behind
+  `NEXT_PUBLIC_ENABLE_ACCOUNTS`, and 404 in production. They are not
+  empty shells — the login accepted any credentials and showed
+  plausible-looking ticket references, which live is worse than
+  nothing. See `src/lib/accounts.ts`. If ticketing runs through an
+  external platform, delete them rather than finishing them.
 - **`/tickets/[id]`** is a shell. A real ticket needs a scannable code
   that is verifiable at the door and cannot be forged or reused — that
   belongs to the ticketing platform, not to this codebase.
 - **Sam Alfred** is set to `sold-out` to demonstrate that state. Change
-  `status` in `content/events.ts` for the real listing.
+  **Status** in the admin for the real listing.
 - **Gallery act tags are guesses.** Each photo lists which acts it
   belongs to. I assigned them so every filter has something to show;
   they need retagging against what the photos actually are.
@@ -70,7 +79,7 @@ payment, refunds, door scanning and chargebacks.
 
 Once chosen, the integration is: set `NEXT_PUBLIC_TICKETING_MODE` to
 `external` in Vercel, and paste each event's ticket URL into
-`content/events.ts`. That is the whole job.
+the **Ticket link** field in the admin. That is the whole job.
 
 **Ask the venue what they use now.** If they are already selling
 tickets, the decision is already made.

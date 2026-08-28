@@ -2,7 +2,7 @@
  * EVENT PAGE
  * ─────────────────────────────────────────────────────────────
  * Event card on the left, checkout panel on the right.
- * Everything on this page comes from content/events.ts.
+ * Everything on this page comes from the admin, via content/events/*.json.
  */
 
 import type { Metadata } from "next";

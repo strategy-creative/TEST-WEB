@@ -2,7 +2,7 @@
  * EVENT CARD
  * ─────────────────────────────────────────────────────────────
  * One event in the events grid. Three states, chosen automatically
- * from the event's `status` in content/events.ts:
+ * from the event's `status`, set in the admin at /keystatic:
  *
  *   on-sale   → photo; hovering darkens it and reveals GET TICKETS →
  *   sold-out  → crossed-out dashed block, not clickable

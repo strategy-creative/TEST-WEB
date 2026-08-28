@@ -21,7 +21,7 @@ export const externalProvider: TicketingProvider = {
   label: "External ticketing platform",
 
   ticketUrlFor(_eventSlug, fallback) {
-    // Per-event URLs live in content/events.ts → externalTicketUrl.
+    // Per-event URLs are set in the admin → the event → Ticket link.
     // A site-wide box office page can be set as the fallback.
     return fallback ?? process.env.NEXT_PUBLIC_BOX_OFFICE_URL ?? null;
   },
@@ -30,7 +30,7 @@ export const externalProvider: TicketingProvider = {
     return {
       kind: "error",
       message:
-        "This event links out to the ticketing platform. Set externalTicketUrl on the event in content/events.ts.",
+        "No ticket link is set for this event. Add one in the admin at /keystatic → the event → Ticket link.",
     };
   },
 };

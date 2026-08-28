@@ -15,7 +15,7 @@
  *    Flicket, Humanitix, Eventbrite, Ticket Tailor, iTicket. They take
  *    the payment, issue the ticket, scan it at the door and handle
  *    refunds. You do nothing. Set each event's `externalTicketUrl` in
- *    content/events.ts.
+ *    the admin at /keystatic → the event → Ticket link.
  *
  * 2. "embed"
  *    The platform's own checkout widget renders inside the dashed

@@ -11,13 +11,54 @@ the setup, once.
 ## What this folder is
 
 A complete, working website. Not a template or a mockup — the real
-thing, built from the Figma designs. It has:
+thing, built from the Figma designs.
+
+⚠ **It is a plain copy on your computer.** It is not backed up
+anywhere and has no version history yet — that starts when you put it
+on GitHub, which is why that is the first real job below. Until then,
+this folder is the only copy. Do not move or delete it.
+
+It has:
 
 - A home page with the video
 - An events page, with individual pages and a checkout layout
 - A gallery that filters by act
 - A my-tickets page and a log-in page
 - An **admin screen** where you add events and photos yourself
+
+---
+
+## ⚠ BEFORE ANYONE SEES THIS SITE
+
+Three things must be sorted before you put this in front of the public.
+None are hard. All of them matter.
+
+**1. Tickets are not connected.** Every event needs a **Ticket link**
+added in the admin, pointing at wherever you actually sell. Until then
+the page says "TICKETS ON SALE SOON" — which is honest, but it is not
+selling anything.
+
+**2. Real terms and conditions.** The `/terms` page is placeholder text
+that literally says terms go here. You are selling entry to a licensed
+venue; this one is not optional.
+
+**3. Check the sample content.** Some of what is in there is
+placeholder, not real:
+
+- **Sam Alfred** is marked *sold out* as a demonstration, not because
+  it is.
+- The **Smoke & Dart** write-up is invented filler.
+- The **gallery photo tags** are guesses — they need checking against
+  what the photos actually show.
+
+### Already handled for you
+
+The log-in, my-tickets and view-ticket pages are **switched off**. They
+were designed but there is no real account system behind them, and a
+fake login showing what looks like a valid ticket is worse than no
+login at all. The designs are still in the project; they just do not
+answer to the public. Leave them off until accounts genuinely exist —
+and if you sell through an outside platform, you will never need them.
 
 ---
 

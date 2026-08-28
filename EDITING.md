@@ -6,9 +6,23 @@ through an admin page in your browser.
 
 ---
 
+## ⚠ Read this first
+
+**This guide describes how it works once the site is set up and the
+admin has been connected to GitHub.** Until that step is done — see
+`START-HERE.md` — the admin only runs on your own computer, at
+`http://localhost:3000/keystatic`, and your changes stay on that
+machine.
+
+Everything below is otherwise accurate. Just do not expect
+`yourdomain.com/keystatic` to load until someone has switched it over.
+
+---
+
 ## Where to go
 
-**yourdomain.com/keystatic**
+**yourdomain.com/keystatic** — once it is connected.
+**http://localhost:3000/keystatic** — on your own computer, right now.
 
 Sign in with GitHub the first time. That is the only account you need,
 it is free, and it is how the site knows the change came from you.

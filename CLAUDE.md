@@ -211,7 +211,7 @@ small adapter, selected by the `NEXT_PUBLIC_TICKETING_MODE` environment
 variable:
 
 - `external` *(default, recommended)* — GET TICKETS links out to a ticketing
-  platform. Set `externalTicketUrl` per event in `content/events.ts`.
+  platform. Set the **Ticket link** per event in the admin at `/keystatic`.
 - `embed` — the platform's widget renders inside the checkout panel.
 - `stripe` — on-site checkout with Stripe's hosted card fields.
 
@@ -236,7 +236,7 @@ variable:
 The venue almost certainly does not need to build payments. Pick a platform
 (Flicket, Humanitix, Eventbrite, Ticket Tailor and iTicket all operate in NZ),
 set mode to `external`, and paste each event's ticket URL into
-`content/events.ts`. They handle payment, refunds, scanning at the door and
+the admin. They handle payment, refunds, scanning at the door and
 chargebacks. Revisit only if there is a concrete reason.
 
 ---
@@ -254,7 +254,7 @@ Things left deliberately unfinished, so nobody "discovers" them as bugs:
   verifiable at the door and cannot be forged or reused. That belongs to the
   ticketing platform. Do not invent a ticket format.
 - **Sam Alfred** is currently set to `sold-out` to demonstrate that state.
-  Change `status` in `content/events.ts` to `on-sale` for the real listing.
+  Change **Status** in the admin to *On sale* for the real listing.
 - **Typos carried over from Figma, corrected in the build:** `CHRISTCHUCH` →
   `CHRISTCHURCH`, `REGESTER` → `REGISTER`, `QUANITITY` → `QUANTITY`. If the
   Figma file is updated, keep the corrected spellings.

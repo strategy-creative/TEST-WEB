@@ -60,10 +60,11 @@ export const site = {
    */
   footerLinks: [
     { label: "EVENTS", href: "/events" },
-    { label: "LOG IN", href: "/login" },
-    { label: "MY TICKETS", href: "/my-tickets", requiresAuth: true },
     { label: "GALLERY", href: "/gallery" },
     { label: "TERMS", href: "/terms" },
+    // ⚠ LOG IN and MY TICKETS are removed while accounts are switched
+    // off — a link to a page that 404s is worse than no link.
+    // See src/lib/accounts.ts before putting them back.
   ] as NavLink[],
 
   /** Bottom-right of the footer. Edited in the admin. */
@@ -77,8 +78,7 @@ export const site = {
   menuLinks: [
     { label: "EVENTS", href: "/events" },
     { label: "GALLERY", href: "/gallery" },
-    { label: "MY TICKETS", href: "/my-tickets", requiresAuth: true },
-    { label: "LOG IN", href: "/login" },
+    // ⚠ See the note on footerLinks — accounts are off.
   ] as NavLink[],
 } as const;
 
