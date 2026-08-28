@@ -80,8 +80,16 @@ export function NavBar({
 
   return (
     <>
+      {/*
+        ⚠ pointer-events-none on the bar, auto on its two controls.
+        The bar is a full-width fixed block at z-50, so without this it
+        sits INVISIBLY over whatever is beneath it and eats the clicks —
+        which is exactly what made the top links in the open menu
+        unclickable. Only the logo and the button should be hit targets.
+        Restore both halves together if you ever touch this.
+      */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 py-(--spacing-gutter) ${tone} ${backdrop} transition-colors duration-300`}
+        className={`pointer-events-none fixed inset-x-0 top-0 z-50 py-(--spacing-gutter) ${tone} ${backdrop} transition-colors duration-300`}
       >
         <Frame>
           <div className="flex items-start justify-between">
@@ -99,7 +107,7 @@ export function NavBar({
               {showLogo ? (
                 <Link
                   href="/"
-                  className="text-(length:--text-heading) leading-[0.9] uppercase tracking-design"
+                  className="pointer-events-auto justify-self-start text-(length:--text-heading) leading-[0.9] uppercase tracking-design"
                 >
                   {site.name}
                 </Link>
@@ -121,7 +129,7 @@ export function NavBar({
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label={open ? "Close menu" : "Open menu"}
-              className="-m-1 cursor-pointer p-1"
+              className="pointer-events-auto -m-1 cursor-pointer p-1"
             >
               <MenuIcon open={open} />
             </button>

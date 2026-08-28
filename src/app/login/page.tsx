@@ -102,16 +102,21 @@ export default function LoginPage() {
               >
                 LOGIN &gt;
               </button>
-
-              {/*
-                Shown on screen, not just in a comment: nobody reviewing
-                this should mistake it for a working login.
-              */}
-              <p className="w-full max-w-[213px] text-right font-sc text-(length:--text-tiny) tracking-design text-muted-soft">
-                Preview only — no account is created and nothing is
-                checked.
-              </p>
             </div>
+
+            {/*
+              Shown on screen, not just in a comment: nobody reviewing
+              this should mistake it for a working login.
+
+              Sits on the left margin, below the form, on one line —
+              deliberately out of the field column so it reads as a note
+              about the page rather than a message about the button.
+              It only holds to one line from sm up; forcing nowrap on a
+              375px phone pushed the page into a horizontal scroll.
+            */}
+            <p className="mt-[40px] font-sc text-(length:--text-tiny) tracking-design text-muted-soft sm:whitespace-nowrap">
+              Preview only — no account is created and nothing is checked.
+            </p>
           </form>
         </Reveal>
       </Frame>
