@@ -70,9 +70,27 @@ Changes you make appear as you save.
 
 ---
 
+## Accounts — all of them yours
+
+**You do not need anyone else's login.** Not the designer's, not
+anyone's. This folder is a clean copy with no connection to whoever
+built it. You create your own accounts and you own the site outright.
+
+You will need three, all free to start:
+
+| | What for | Cost |
+| --- | --- | --- |
+| **GitHub** | Stores the site and every version of it | Free |
+| **Vercel** | Puts it online and re-publishes it on every change | Free tier is plenty |
+| **A domain** | e.g. unit20.co.nz | ~$25–40/year |
+
+The domain is the only thing you have to pay for.
+
+---
+
 ## Getting it online
 
-Two things, in order.
+Three things, in order.
 
 ### GitHub
 
@@ -91,8 +109,18 @@ automatically every time anything changes.
 
 Ask Claude: *"connect this repo to Vercel and deploy it"*.
 
-Once that is done, your site is live and the admin is at
-**yourdomain.com/keystatic**.
+Once that is done, your site is live on a free `.vercel.app` address.
+
+### Your own domain
+
+Buy it wherever you like — any New Zealand registrar sells `.co.nz`.
+You do **not** have to buy it through Vercel.
+
+Then in Vercel: **Project → Settings → Domains → Add**. It tells you
+exactly which DNS records to enter at whoever you bought the domain
+from, and takes care of the security certificate itself.
+
+Ask Claude: *"help me point my domain at this Vercel project"*.
 
 ### One extra step for the admin
 
@@ -102,6 +130,10 @@ site from anywhere, it needs connecting to GitHub properly.
 Ask Claude: *"switch Keystatic to GitHub storage so I can edit the live
 site"*. It is a ten-minute job and it is documented in
 `keystatic.config.ts`.
+
+⚠ It connects to **your** GitHub account and **your** repository. If
+anyone else's username appears in that step, something has gone wrong —
+stop and check.
 
 ---
 

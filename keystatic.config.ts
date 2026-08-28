@@ -57,13 +57,25 @@ const eventImage = fields.image({
 export default config({
   /*
    * "local" lets anyone running the site on their own machine edit
-   * without logging in. On the live site Keystatic uses GitHub, so the
-   * venue signs in with a GitHub account and every save is a commit
-   * under their name.
+   * without logging in. That is where it starts, and it is why the
+   * admin does not work on the live site yet.
    *
-   * To switch the live site to GitHub mode, change this to:
-   *   storage: { kind: "github", repo: "strategy-creative/TEST-WEB" }
-   * and add the GitHub App credentials to Vercel. See EDITING.md.
+   * TO EDIT THE LIVE SITE — the ten-minute job:
+   *
+   *   storage: {
+   *     kind: "github",
+   *     repo: "YOUR-GITHUB-USERNAME/YOUR-REPO-NAME",
+   *   }
+   *
+   * ⚠ That must be YOUR OWN GitHub account and YOUR OWN repository —
+   * the one you pushed this project to. Not the account of whoever
+   * built it for you. You own this site; nothing here is shared with
+   * anyone else.
+   *
+   * Then create a GitHub App (Keystatic walks you through it on first
+   * run) and put the credentials it gives you into Vercel's
+   * environment variables. Ask Claude: "switch Keystatic to GitHub
+   * storage" and it will do the rest.
    */
   storage: { kind: "local" },
 
