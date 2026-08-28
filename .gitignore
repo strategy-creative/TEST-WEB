@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# handover and backup archives.
+# Never commit a copy of the project into itself — it doubles the repo
+# size on every backup and confuses anyone opening the folder.
+# Keep them somewhere outside this directory.
+/*.tar.gz
+/*.zip
