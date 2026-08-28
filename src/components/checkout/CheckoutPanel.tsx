@@ -300,16 +300,18 @@ function PanelShell({
     <div className="flex min-h-[833px] w-full flex-col justify-between border border-dashed border-ink p-[25px]">
       {/* Header: date left, location right */}
       <div className="flex flex-col gap-[40px] font-sc text-(length:--text-caption) tracking-design xl:flex-row xl:gap-[162px]">
-        <p className="w-[278px]">
+        <p className="w-[278px] break-words">
           {event.dateLabel}
           <br />
           {event.timeLabel}
         </p>
 
         <div className="flex w-[221px] flex-col gap-[28px]">
-          <div className="flex items-center gap-[45px] whitespace-nowrap">
-            <span>LOCATION:</span>
-            <span className="text-muted-soft">{event.location}</span>
+          <div className="flex items-start gap-[20px]">
+            <span className="shrink-0">LOCATION:</span>
+            <span className="min-w-0 break-words text-muted-soft">
+              {event.location}
+            </span>
           </div>
           <p>{event.doorsLabel}</p>
         </div>
@@ -319,12 +321,12 @@ function PanelShell({
       <div className="mt-[80px] flex flex-col gap-[83px]">
         <div className="flex flex-col gap-[27px] font-sc">
           <div className="flex items-start justify-between whitespace-nowrap text-(length:--text-checkout) tracking-design">
-            <h2>CHECKOUT</h2>
+            <h2 className="shrink-0">CHECKOUT</h2>
             <p>${total}</p>
           </div>
 
           {/* Tier line — available in black, sold out in grey */}
-          <p className="text-(length:--text-caption) tracking-design">
+          <p className="break-words text-(length:--text-caption) tracking-design">
             {event.tiers.map((tier, i) => (
               <span
                 key={tier.name}

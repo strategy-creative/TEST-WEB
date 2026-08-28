@@ -77,14 +77,29 @@ To add a field they can control, all three, in order:
 
 Miss any one and it will not appear.
 
-⚠ **The character limits are load-bearing.** Each one is the point where that
-text starts wrapping badly or colliding with something in the Figma layout.
-If a title needs to be longer, **change the layout to cope first**, then raise
-the cap. Raising it alone just moves the breakage to the live site.
+### The philosophy: the layout flexes, the limits only nudge
 
-Same for the gallery: the admin offers four named shapes, not free width and
-height fields, so the stepped column always resolves to sizes the layout was
-built around.
+The character caps are generous on purpose. They hint at what reads well;
+they are not a cage. A venue that cannot name its own event will just work
+around you.
+
+**The real protection is in the components.** Every block that renders venue
+content wraps, breaks long words, and GROWS rather than clipping. A long
+title wraps, the card gets taller, and the grid row grows with it so the
+cards beside it stay aligned. Verified against the worst case the caps allow
+— two 40-character unbreakable words — with no horizontal overflow and no
+overlap.
+
+⚠ **If you raise a cap, fill every field to the new maximum and look at the
+page.** The bar is not "long text is allowed", it is "long text still
+produces something you would publish".
+
+⚠ **Never use a fixed height on a block that renders venue text.** The event
+card info block was `h-[72px]` and a long title grew straight into the date
+line. It is `min-h-[72px]` now. Same trap anywhere else.
+
+The gallery is the one place that stays closed: four named shapes, not free
+width and height fields, so the stepped column keeps its stagger.
 
 ---
 

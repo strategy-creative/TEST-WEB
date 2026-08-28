@@ -18,9 +18,20 @@ import { SoldOutBlock } from "./SoldOutBlock";
 
 function EventInfo({ event }: { event: VenueEvent }) {
   return (
-    <div className="mt-[27px] flex h-[72px] flex-col justify-between font-sc text-ink">
-      <div className="flex items-start justify-between text-(length:--text-base) tracking-design">
-        <p className="pr-[12px]">
+    /*
+     * ⚠ min-h, not a fixed h. With a fixed height a long title grows
+     * downward into the date line and the two collide. With min-h the
+     * block grows, the grid row grows with it, and the cards beside it
+     * stay aligned — which is what you want when a name runs long.
+     */
+    <div className="mt-[27px] flex min-h-[72px] flex-col justify-between gap-[8px] font-sc text-ink">
+      <div className="flex items-start justify-between gap-[12px] text-(length:--text-base) tracking-design">
+        {/*
+          break-words matters as much as wrapping. A long name with no
+          spaces in it cannot break on its own, so it runs straight out
+          of the card and puts the whole page into a horizontal scroll.
+        */}
+        <p className="min-w-0 break-words">
           {event.title}
           {event.subtitle ? (
             <>
@@ -29,10 +40,12 @@ function EventInfo({ event }: { event: VenueEvent }) {
             </>
           ) : null}
         </p>
-        <p className="whitespace-nowrap text-right">${event.fromPrice}</p>
+        <p className="shrink-0 whitespace-nowrap text-right">
+          ${event.fromPrice}
+        </p>
       </div>
 
-      <p className="text-(length:--text-meta) tracking-design">
+      <p className="break-words text-(length:--text-meta) tracking-design">
         {event.dateLabel}
         <br />
         {event.timeLabel}

@@ -102,25 +102,34 @@ You will probably set these once and never touch them again.
 
 ---
 
-## What you cannot change here, and why
+## What happens if you type too much
 
-The admin deliberately will not let you do certain things:
+Nothing bad. This is worth knowing, because it is the thing people
+worry about.
 
-- **Character limits on titles and descriptions.** These are not
-  arbitrary — they are the point at which that text starts wrapping
-  badly or running into something else. If something genuinely needs
-  to be longer, that is a small design change, not a limit to argue
-  with.
-- **Photo shapes come from a list.** No typing in your own pixel
-  sizes. The four shapes are the ones the gallery layout is built
-  around; free numbers would break the stagger.
-- **Three ticket tiers, ten DJs, ten acts.** Those are what fit.
-- **Page layouts, colours, fonts, the menu.** These are the design.
-  Changing them is a developer job.
+**Long text wraps and the block grows.** A long event name runs onto a
+second line and the card gets taller — and every card in that row grows
+with it, so they stay lined up. The date does not get pushed on top of
+anything, and the page never scrolls sideways. Even a single
+40-character word with no spaces in it breaks cleanly rather than
+running off the edge.
 
-The point of all of this is that **you cannot break the design from
-this screen.** Fill in whatever you like; it will come out looking
-right.
+So the character counts are **guidance, not a fence**. They tell you
+roughly what fits on one line. Go past them and the design adapts
+sensibly — it does not break.
+
+What that means in practice: name your events what they are actually
+called. A slightly taller card is not a problem.
+
+### The few things that are fixed
+
+- **Photo shapes come from a list of four.** No typing your own pixel
+  sizes — those four are what the stepped gallery layout is built
+  around, and free numbers would lose the stagger that makes it work.
+- **Three ticket tiers, ten DJs, ten acts.** Past those the line stops
+  reading as a line.
+- **Page layouts, colours, fonts, the menu.** That is the design.
+  Changing it is a developer job.
 
 ---
 

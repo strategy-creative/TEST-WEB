@@ -67,7 +67,7 @@ export default async function EventPage({
               </div>
 
               <div className="flex flex-col gap-[96px]">
-                <h1 className="font-sc text-[clamp(1.75rem,3vw,38.964px)] tracking-design">
+                <h1 className="break-words font-sc text-[clamp(1.75rem,3vw,38.964px)] tracking-design">
                   {event.title}
                   {event.subtitle ? ` ${event.subtitle}` : ""}
                 </h1>
@@ -80,15 +80,15 @@ export default async function EventPage({
                   what let the two columns drift out of alignment.
                 */}
                 <div className="grid grid-cols-1 gap-x-[0px] gap-y-[52px] font-body text-(length:--text-micro) tracking-[-0.03em] sm:grid-cols-[234px_1fr]">
-                  <p className="whitespace-nowrap">About this event:</p>
-                  <p className="max-w-[307px]">{event.description}</p>
+                  <p className="break-words sm:whitespace-nowrap">About this event:</p>
+                  <p className="max-w-[307px] break-words">{event.description}</p>
 
                   <p className="whitespace-nowrap">DJ&rsquo;s:</p>
                   <dl className="grid max-w-[307px] grid-cols-[116px_1fr]">
                     {event.lineup.map((slot) => (
                       <Fragment key={slot.name}>
-                        <dt>{slot.name}</dt>
-                        <dd>{slot.time}</dd>
+                        <dt className="break-words pr-[8px]">{slot.name}</dt>
+                        <dd className="break-words">{slot.time}</dd>
                       </Fragment>
                     ))}
                   </dl>

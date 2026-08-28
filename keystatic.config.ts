@@ -1,9 +1,21 @@
 /**
  * KEYSTATIC — THE EDITOR
  * ═════════════════════════════════════════════════════════════
- * This file defines what the venue can and cannot change from the
- * admin at /keystatic. It is the guardrail: every limit here is a
- * layout that cannot be broken from the editor.
+ * This file defines what the venue can change from the admin at
+ * /keystatic.
+ *
+ * ⚠ THE PHILOSOPHY: THE LAYOUT FLEXES, THE LIMITS ONLY NUDGE.
+ * The caps below are generous on purpose. They are a hint about what
+ * reads well, not a cage — because a venue that cannot name its own
+ * event will just work around you.
+ *
+ * The real protection is in the components, not here. Every block that
+ * renders this content wraps, breaks long words, and GROWS rather than
+ * clipping or overlapping. A long title wraps and the card gets
+ * taller; the whole grid row grows with it so the cards beside it stay
+ * aligned. It degrades into a sensible design, not a broken one.
+ *
+ * That is the deal: he can type what he needs, and the page adapts.
  *
  * HOW IT WORKS
  * Keystatic is git-based. There is no database and no monthly bill.
@@ -12,12 +24,10 @@
  * Vercel sees the commit and redeploys. Roll back a bad edit with
  * git, like any other change.
  *
- * ⚠ BEFORE YOU LOOSEN A LIMIT
- * The character caps are not arbitrary. They are the point at which
- * that piece of text starts wrapping badly or colliding with
- * something in the Figma layout. If a title needs to be longer, change
- * the layout to cope FIRST, then raise the cap. Raising it on its own
- * just moves the breakage to the live site.
+ * ⚠ IF YOU RAISE A CAP, TEST IT.
+ * Fill every field to its new maximum and look at the page. The point
+ * is not that long text is forbidden — it is that long text still
+ * produces something you would be happy to publish.
  *
  * Adding a field here does nothing on its own — the matching page
  * component has to render it. Fields and layout move together.
@@ -84,8 +94,8 @@ export default config({
           name: {
             label: "Event name",
             description:
-              "Line one of the card. Keep it short — 24 characters fits on one line.",
-            validation: { isRequired: true, length: { min: 2, max: 34 } },
+              "Line one of the card. Around 24 characters keeps it to one line; longer is fine, it wraps and the card grows.",
+            validation: { isRequired: true, length: { min: 2, max: 40 } },
           },
           slug: {
             label: "Web address",
@@ -98,7 +108,7 @@ export default config({
           label: "Second line",
           description:
             "Optional. Sits under the event name on the card. Leave empty if the name says it all.",
-          validation: { isRequired: false, length: { min: 0, max: 34 } },
+          validation: { isRequired: false, length: { min: 0, max: 40 } },
         }),
 
         status: fields.select({
@@ -135,27 +145,27 @@ export default config({
           label: "Date as it should read",
           description:
             "Exactly as it appears on the card, e.g. SATURDAY 19TH SEPTEMBER,2026. It is set in capitals automatically.",
-          validation: { isRequired: true, length: { min: 4, max: 40 } },
+          validation: { isRequired: true, length: { min: 4, max: 44 } },
         }),
 
         timeLabel: fields.text({
           label: "Time as it should read",
           description: "e.g. 9:00PM - LATE",
           defaultValue: "9:00PM - LATE",
-          validation: { isRequired: true, length: { min: 2, max: 24 } },
+          validation: { isRequired: true, length: { min: 2, max: 28 } },
         }),
 
         doorsLabel: fields.text({
           label: "Doors",
           description: "e.g. 21:00 - 2:00",
           defaultValue: "21:00 - 2:00",
-          validation: { isRequired: true, length: { min: 2, max: 24 } },
+          validation: { isRequired: true, length: { min: 2, max: 28 } },
         }),
 
         location: fields.text({
           label: "Location",
           defaultValue: "UNIT/20, CHRISTCHURCH",
-          validation: { isRequired: true, length: { min: 2, max: 40 } },
+          validation: { isRequired: true, length: { min: 2, max: 48 } },
         }),
 
         /* ── Tickets ──────────────────────────────────────── */
@@ -170,8 +180,8 @@ export default config({
           fields.object({
             name: fields.text({
               label: "Tier name",
-              description: "e.g. EARLY BIRD",
-              validation: { isRequired: true, length: { min: 2, max: 20 } },
+              description: "e.g. EARLY BIRD. Three tiers share a line, so shorter reads better — but a long one wraps rather than breaking.",
+              validation: { isRequired: true, length: { min: 2, max: 24 } },
             }),
             price: fields.integer({
               label: "Price",
@@ -214,7 +224,7 @@ export default config({
           fields.object({
             name: fields.text({
               label: "DJ",
-              validation: { isRequired: true, length: { min: 1, max: 24 } },
+              validation: { isRequired: true, length: { min: 1, max: 28 } },
             }),
             time: fields.text({
               label: "Set time",

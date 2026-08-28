@@ -87,7 +87,7 @@ export function MyTicketsClient({ tickets, gridSlots }: MyTicketsClientProps) {
               </div>
             </Link>
 
-            <div className="mt-[27px] font-sc text-(length:--text-base) tracking-design">
+            <div className="mt-[27px] font-sc text-(length:--text-base) tracking-design break-words">
               <p>
                 {ticket.event.title}
                 {ticket.event.subtitle ? (
