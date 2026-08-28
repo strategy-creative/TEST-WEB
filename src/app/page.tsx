@@ -33,16 +33,36 @@ export default function HomePage() {
         <NavBar theme="dark" />
       </div>
 
-      {/* ══ PHONES ═══════════════════════════════════════════════ */}
-      <main className="flex min-h-svh flex-col bg-paper pt-[146px] pb-[40px] sm:hidden">
+      {/*
+        ══ PHONES ═══════════════════════════════════════════════
+        The block is vertically CENTRED rather than pushed down from
+        the top, so it sits right on any handset from an SE to a Pro
+        Max — `justify-center` on a full-height column does the work,
+        and there is no fixed top padding to go wrong. It is nudged
+        slightly above true centre (pb > pt) because optical centre
+        reads a little high.
+      */}
+      <main className="flex min-h-svh flex-col justify-center bg-paper pt-[80px] pb-[120px] sm:hidden">
         <Frame>
           <div className="flex flex-col items-center gap-[36px]">
             <h1 className="w-full text-center text-(length:--text-heading) leading-[0.9] uppercase tracking-design text-heading">
               {site.name}
             </h1>
 
-            {/* Portrait video panel, 261 × 381 in the design */}
-            <div className="w-[261px] max-w-full">
+            {/*
+              Portrait video panel. 261px in the Figma frame, but that
+              was drawn on a 393px iPhone — held at 78% of the viewport
+              it keeps the same proportion of the screen on a small
+              handset and grows on a large one, which is what "bigger"
+              wants. 340px stops it ballooning on tablets.
+
+              ⚠ The 36svh term is the one that matters on short phones.
+              The panel is 261 × 381, so its height is width ÷ 0.685;
+              capping the WIDTH at 36svh caps the height at ~52svh and
+              keeps VIEW EVENTS and the circles on screen on an SE.
+              Without it the block overflows the bottom of the page.
+            */}
+            <div className="w-[min(78vw,340px,36svh)]">
               <HeroPanel />
             </div>
 
@@ -56,12 +76,12 @@ export default function HomePage() {
         </Frame>
 
         {/*
-          Small circle strip, well below the link.
+          Small circle strip, sitting below the block.
           ⚠ It is white-filled under a difference blend, which renders
           BLACK on the white page and inverts over anything darker.
           A black fill here would difference to white and disappear.
         */}
-        <div className="mt-[115px] flex justify-center">
+        <div className="mt-[64px] flex justify-center">
           <div className="w-[107px] mix-blend-difference">
             <DotStrip blend />
           </div>

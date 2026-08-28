@@ -17,20 +17,27 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { NavBar } from "@/components/nav/NavBar";
+import { startPreviewSession } from "@/lib/session";
 import { Footer } from "@/components/layout/Footer";
 import { Frame } from "@/components/layout/Frame";
 import { Reveal } from "@/components/motion/Reveal";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notice, setNotice] = useState<string | null>(null);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Deliberately does not authenticate. See the note above.
-    setNotice("Accounts are not connected yet.");
+    /*
+     * ⚠ NOTHING IS CHECKED HERE. This flips a flag in the browser so
+     * the signed-in screens can be reviewed, then sends you to them.
+     * It is not a login. See src/lib/session.ts.
+     */
+    startPreviewSession();
+    router.push("/my-tickets");
   };
 
   const fieldClass =
@@ -40,7 +47,12 @@ export default function LoginPage() {
     <>
       <NavBar pageName="LOG IN" />
 
-      <Frame as="main" className="pt-[288px]">
+      {/*
+        min-h keeps the footer below the fold — this page is short, and
+        a footer sitting right under the form makes it feel like a stub
+        rather than a page.
+      */}
+      <Frame as="main" className="min-h-svh pt-[288px]">
         <Reveal>
           <form
             onSubmit={onSubmit}
@@ -91,14 +103,14 @@ export default function LoginPage() {
                 LOGIN &gt;
               </button>
 
-              {notice ? (
-                <p
-                  role="status"
-                  className="w-full max-w-[213px] text-right font-sc text-(length:--text-tiny) tracking-design text-muted-soft"
-                >
-                  {notice}
-                </p>
-              ) : null}
+              {/*
+                Shown on screen, not just in a comment: nobody reviewing
+                this should mistake it for a working login.
+              */}
+              <p className="w-full max-w-[213px] text-right font-sc text-(length:--text-tiny) tracking-design text-muted-soft">
+                Preview only — no account is created and nothing is
+                checked.
+              </p>
             </div>
           </form>
         </Reveal>

@@ -85,11 +85,16 @@ export function NavBar({
       >
         <Frame>
           <div className="flex items-start justify-between">
+            {/*
+              ⚠ The column width is passed as a CSS variable, not as an
+              inline gridTemplateColumns. An inline style beats every
+              responsive class, so setting the 350px column that way
+              applied it on phones too and pushed the hamburger off the
+              right edge. One column on phones, two from sm up.
+            */}
             <div
-              className="grid items-start gap-x-0 max-sm:grid-cols-1"
-              style={{
-                gridTemplateColumns: `${NAV_COLUMN}px auto`,
-              }}
+              className="grid grid-cols-1 items-start gap-x-0 sm:grid-cols-[var(--nav-col)_auto]"
+              style={{ "--nav-col": `${NAV_COLUMN}px` } as React.CSSProperties}
             >
               {showLogo ? (
                 <Link

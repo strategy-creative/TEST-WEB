@@ -1,3 +1,10 @@
+export type NavLink = {
+  label: string;
+  href: string;
+  /** Hidden until someone is signed in. See src/lib/session.ts. */
+  requiresAuth?: boolean;
+};
+
 /**
  * SITE SETTINGS
  * ─────────────────────────────────────────────────────────────
@@ -35,14 +42,17 @@ export const site = {
     imageAlt: "A packed crowd on the UNIT/20 dancefloor",
   },
 
-  /** Footer link list, in order. Add or remove freely. */
+  /**
+   * Footer link list, in order. Add or remove freely.
+   * `requiresAuth` links only appear once someone is signed in.
+   */
   footerLinks: [
     { label: "EVENTS", href: "/events" },
     { label: "LOG IN", href: "/login" },
-    { label: "MY TICKETS", href: "/my-tickets" },
+    { label: "MY TICKETS", href: "/my-tickets", requiresAuth: true },
     { label: "GALLERY", href: "/gallery" },
     { label: "TERMS", href: "/terms" },
-  ],
+  ] as NavLink[],
 
   /** Bottom-right of the footer. */
   copyright: "ALL RIGHTS RESERVED @UNIT20",
@@ -50,14 +60,15 @@ export const site = {
   /**
    * Links in the full-screen menu overlay (the hamburger).
    * They render at logo size, stacked, in the second column.
+   * `requiresAuth` links only appear once someone is signed in.
    */
   menuLinks: [
-    { label: "BUY TICKETS", href: "/events" },
     { label: "EVENTS", href: "/events" },
     { label: "GALLERY", href: "/gallery" },
-    { label: "MY TICKETS", href: "/my-tickets" },
+    { label: "MY TICKETS", href: "/my-tickets", requiresAuth: true },
     { label: "LOG IN", href: "/login" },
-  ],
+  ] as NavLink[],
 } as const;
 
 export type Site = typeof site;
+

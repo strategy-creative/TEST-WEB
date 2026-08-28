@@ -28,6 +28,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { site } from "../../../content/site";
+import { useSession } from "@/lib/session";
 import { Frame } from "../layout/Frame";
 import { NAV_COLUMN } from "./NavBar";
 
@@ -37,6 +38,15 @@ type MenuOverlayProps = {
 };
 
 export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
+  const { signedIn } = useSession();
+
+  /*
+   * Links marked requiresAuth are hidden until someone is signed in.
+   * ⚠ This hides the link, it does not protect the page — see
+   * src/lib/session.ts.
+   */
+  const links = site.menuLinks.filter((l) => !l.requiresAuth || signedIn);
+
   // Escape closes it, and the page behind must not scroll.
   useEffect(() => {
     if (!open) return;
@@ -66,7 +76,7 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
           {/* ── Phones: links pinned to the bottom ─────────────── */}
           <Frame className="mt-auto sm:hidden">
             <ul className="flex flex-col gap-[12px] text-(length:--text-heading) leading-[1.05] uppercase tracking-design">
-              {site.menuLinks.map((link, i) => (
+              {links.map((link, i) => (
                 <motion.li
                   key={link.href}
                   initial={{ opacity: 0, y: 14 }}
@@ -93,14 +103,14 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
           {/* ── Desktop: links in the nav's second column ───────── */}
           <Frame className="hidden sm:block">
             <div
-              className="grid items-start"
-              style={{ gridTemplateColumns: `${NAV_COLUMN}px auto` }}
+              className="grid grid-cols-[var(--nav-col)_auto] items-start"
+              style={{ "--nav-col": `${NAV_COLUMN}px` } as React.CSSProperties}
             >
               {/* The nav bar's logo sits over this cell. */}
               <div aria-hidden />
 
               <ul className="flex flex-col text-(length:--text-heading) leading-[1.5] uppercase tracking-design">
-                {site.menuLinks.map((link, i) => (
+                {links.map((link, i) => (
                   <motion.li
                     key={link.href}
                     initial={{ opacity: 0, y: 14 }}
