@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NavBar } from "@/components/nav/NavBar";
 import { Footer } from "@/components/layout/Footer";
+import { Frame } from "@/components/layout/Frame";
 import { Gallery } from "@/components/gallery/Gallery";
 
 export const metadata: Metadata = {
@@ -13,9 +14,9 @@ export default function GalleryPage() {
     <>
       <NavBar pageName="GALLERY" />
 
-      <main className="mx-auto w-full max-w-(--container-frame) px-(--spacing-gutter) pt-[226px] sm:px-0">
+      <Frame as="main" className="pt-[226px]">
         <Gallery />
-      </main>
+      </Frame>
 
       <Footer />
     </>

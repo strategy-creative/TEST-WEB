@@ -3,25 +3,32 @@
 /**
  * MENU OVERLAY
  * ─────────────────────────────────────────────────────────────
- * Full-screen black panel that slides up from below.
+ * Two different designs, one component.
  *
- * The links sit at the TOP, at logo size, in the same 350px column the
- * page name occupies in the nav bar — so opening the menu reads as the
- * page name being replaced by the list, not as a separate screen. The
- * logo and the close icon are the nav bar's own; it sits above this
- * panel (z-50 vs z-40) and shows straight through.
+ * DESKTOP (sm and up) — full-screen BLACK panel sliding up. Links sit
+ * at the top at logo size, in the same 350px column the page name
+ * occupies in the nav bar, so opening the menu reads as the page name
+ * being swapped for the list.
+ *
+ * PHONES — full-screen WHITE panel. Links sit at the BOTTOM, left
+ * aligned, each with a ">" pushed to the right edge. The nav bar's
+ * logo and close icon stay black over it.
+ *
+ * That difference is deliberate and comes straight from the Figma
+ * mobile frames — it is not a responsive accident. Do not collapse the
+ * two into one treatment.
  *
  * ⚠ Column offset comes from NAV_COLUMN in NavBar.tsx. Do not hardcode
  * a second copy of that number here.
  *
- * The links come from content/site.ts → menuLinks. Add one there and it
- * appears here, no code change.
+ * Links come from content/site.ts → menuLinks.
  */
 
 import Link from "next/link";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { site } from "../../../content/site";
+import { Frame } from "../layout/Frame";
 import { NAV_COLUMN } from "./NavBar";
 
 type MenuOverlayProps = {
@@ -50,13 +57,41 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
     <AnimatePresence>
       {open ? (
         <motion.nav
-          className="fixed inset-0 z-40 bg-ink px-(--spacing-gutter) py-(--spacing-gutter) text-paper"
+          className="fixed inset-0 z-40 flex flex-col bg-paper py-(--spacing-gutter) text-ink sm:bg-ink sm:text-paper"
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="mx-auto w-full max-w-(--container-frame)">
+          {/* ── Phones: links pinned to the bottom ─────────────── */}
+          <Frame className="mt-auto sm:hidden">
+            <ul className="flex flex-col gap-[12px] text-(length:--text-heading) leading-[1.05] uppercase tracking-design">
+              {site.menuLinks.map((link, i) => (
+                <motion.li
+                  key={link.href}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.22 + i * 0.05,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={onClose}
+                    className="flex items-center justify-between"
+                  >
+                    <span>{link.label}</span>
+                    <span aria-hidden>&gt;</span>
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </Frame>
+
+          {/* ── Desktop: links in the nav's second column ───────── */}
+          <Frame className="hidden sm:block">
             <div
               className="grid items-start"
               style={{ gridTemplateColumns: `${NAV_COLUMN}px auto` }}
@@ -87,19 +122,21 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
                 ))}
               </ul>
             </div>
-          </div>
+          </Frame>
 
-          {/* Location line, bottom of the panel */}
+          {/* Location line along the bottom — desktop only */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.45 }}
-            className="absolute inset-x-0 bottom-(--spacing-gutter) px-(--spacing-gutter)"
+            className="mt-auto hidden sm:block"
           >
-            <div className="mx-auto flex w-full max-w-(--container-frame) items-end justify-between font-sc text-(length:--text-base) tracking-design">
-              <span>{site.hero.centre}</span>
-              <span>{site.hero.right}</span>
-            </div>
+            <Frame>
+              <div className="flex items-end justify-between font-sc text-(length:--text-base) tracking-design">
+                <span>{site.hero.centre}</span>
+                <span>{site.hero.right}</span>
+              </div>
+            </Frame>
           </motion.div>
         </motion.nav>
       ) : null}

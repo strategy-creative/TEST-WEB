@@ -34,9 +34,9 @@ type ImageGridProps = {
 
 export function ImageGrid({ act, images, selected, onSelect }: ImageGridProps) {
   return (
-    <div className="flex flex-col gap-[60px] lg:flex-row lg:items-start lg:justify-between">
+    <div className="flex flex-col gap-[60px] xl:flex-row xl:items-start xl:justify-between">
       {/* ── Left: the stepped photo column ───────────────────── */}
-      <div className="flex w-full flex-col gap-[12px] lg:w-[680px]">
+      <div className="flex w-full flex-col gap-[12px] xl:w-[680px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={act}
@@ -141,9 +141,15 @@ export function ImageGrid({ act, images, selected, onSelect }: ImageGridProps) {
       </div>
 
       {/* ── Right: the viewing panel, with its caption below ──── */}
-      <div className="hidden lg:block">
-        <div className="sticky top-[120px] w-[563px]">
-          <div className="relative size-[563px] overflow-hidden bg-field">
+      {/*
+        The panel only appears from xl up. At lg (1024px) the 680px
+        column plus a 563px panel overflowed the viewport — that is why
+        this is xl and not lg. The panel width is fluid up to its design
+        size so it never forces a horizontal scrollbar again.
+      */}
+      <div className="hidden xl:block">
+        <div className="sticky top-[120px] w-[min(563px,40vw)]">
+          <div className="relative aspect-square w-full overflow-hidden bg-field">
             <AnimatePresence mode="wait">
               {selected ? (
                 <motion.div
@@ -158,7 +164,7 @@ export function ImageGrid({ act, images, selected, onSelect }: ImageGridProps) {
                     src={selected.src}
                     alt={selected.alt}
                     fill
-                    sizes="563px"
+                    sizes="(max-width: 1600px) 40vw, 563px"
                     /*
                      * cover, so the photo fills the square edge to edge.
                      * Landscape shots get cropped top and bottom — that
@@ -183,7 +189,7 @@ export function ImageGrid({ act, images, selected, onSelect }: ImageGridProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="max-w-[563px] font-sc text-(length:--text-caption) tracking-design text-ink"
+                  className="w-full font-sc text-(length:--text-caption) tracking-design text-ink"
                 >
                   {String(
                     images.findIndex((i) => i.src === selected.src) + 1,

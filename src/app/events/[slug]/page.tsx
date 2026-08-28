@@ -11,6 +11,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { NavBar } from "@/components/nav/NavBar";
 import { Footer } from "@/components/layout/Footer";
+import { Frame } from "@/components/layout/Frame";
 import { CheckoutPanel } from "@/components/checkout/CheckoutPanel";
 import { Reveal } from "@/components/motion/Reveal";
 import { events, getEvent } from "../../../../content/events";
@@ -49,7 +50,7 @@ export default async function EventPage({
     <>
       <NavBar pageName="EVENTS" />
 
-      <main className="mx-auto w-full max-w-(--container-frame) px-(--spacing-gutter) pt-[226px] sm:px-0">
+      <Frame as="main" className="pt-[226px]">
         <div className="flex flex-col gap-[60px] xl:flex-row xl:items-start xl:justify-between">
           {/* ── Left: the event ─────────────────────────────── */}
           <Reveal className="w-full xl:w-[563px]">
@@ -101,7 +102,7 @@ export default async function EventPage({
             <CheckoutPanel event={event} />
           </Reveal>
         </div>
-      </main>
+      </Frame>
 
       <Footer />
     </>

@@ -7,6 +7,7 @@
 
 import { NavBar } from "../nav/NavBar";
 import { Footer } from "./Footer";
+import { Frame } from "./Frame";
 import { Reveal } from "../motion/Reveal";
 
 export function SimplePage({
@@ -22,7 +23,7 @@ export function SimplePage({
     <>
       <NavBar pageName={pageName} />
 
-      <main className="mx-auto w-full max-w-(--container-frame) px-(--spacing-gutter) pt-[226px] sm:px-0">
+      <Frame as="main" className="pt-[226px]">
         <Reveal>
           <h1 className="font-sc text-[clamp(1.75rem,3vw,38.964px)] tracking-design">
             {title}
@@ -31,7 +32,7 @@ export function SimplePage({
             {children}
           </div>
         </Reveal>
-      </main>
+      </Frame>
 
       <Footer />
     </>

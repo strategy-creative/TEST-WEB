@@ -8,17 +8,18 @@
 import Link from "next/link";
 import { site } from "../../../content/site";
 import { DotStrip } from "./DotStrip";
+import { Frame } from "./Frame";
 import { Reveal } from "../motion/Reveal";
 
 export function Footer() {
   return (
-    <footer className="mx-auto w-full max-w-(--container-frame) px-(--spacing-gutter) pt-[200px] pb-[60px] sm:px-0">
+    <Frame as="footer" className="pt-[200px] pb-[60px]">
       <Reveal>
         <div className="flex flex-col gap-[60px] font-sc text-(length:--text-base) tracking-design md:flex-row md:items-start md:justify-between md:gap-0">
           <div className="flex w-full max-w-[779px] items-start justify-between gap-[60px]">
             <span>{site.name}</span>
 
-            <ul className="flex w-[79px] flex-col gap-[10px]">
+            <ul className="flex w-auto min-w-[79px] flex-col gap-[10px] whitespace-nowrap">
               {site.footerLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -39,6 +40,6 @@ export function Footer() {
       <div className="mt-[275px] text-ink">
         <DotStrip />
       </div>
-    </footer>
+    </Frame>
   );
 }

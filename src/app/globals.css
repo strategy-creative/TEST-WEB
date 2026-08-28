@@ -51,8 +51,23 @@
   --text-meta: 10px; /* event card date line */
 
   /* ── Layout ──────────────────────────────────────────────── */
-  --spacing-gutter: 30px; /* page margin, all four sides */
+  /*
+   * ⚠ THE MARGIN SYSTEM. Two values, and every page uses both through
+   * the <Frame> component — never by hand.
+   *
+   *   --spacing-gutter    the page margin. 15px on phones, 30px from
+   *                       the sm breakpoint up (see the override below).
+   *   --container-page    the outer cap: frame + both gutters. Content
+   *                       therefore tops out at 1380px and the gutters
+   *                       survive at every width in between.
+   *
+   * The earlier bug was `sm:px-0`, which removed the gutter above
+   * 640px and let content run to the edge of the window on anything
+   * narrower than 1380. Do not reintroduce a padding override.
+   */
+  --spacing-gutter: 15px; /* page margin — phones */
   --container-frame: 1380px; /* content width inside the gutters */
+  --container-page: 1440px; /* frame + both gutters */
 
   /* ── Motion ──────────────────────────────────────────────── */
   /* Change these two and the whole site's feel changes. */
@@ -68,6 +83,13 @@
 html {
   /* Lenis drives scrolling; native smooth scroll would fight it. */
   scroll-behavior: auto;
+}
+
+/* The page margin doubles from the sm breakpoint up. */
+@media (min-width: 640px) {
+  :root {
+    --spacing-gutter: 30px;
+  }
 }
 
 /*

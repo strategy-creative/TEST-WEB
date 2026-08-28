@@ -39,7 +39,7 @@ export const site = {
   footerLinks: [
     { label: "EVENTS", href: "/events" },
     { label: "LOG IN", href: "/login" },
-    { label: "REGISTER", href: "/register" },
+    { label: "MY TICKETS", href: "/my-tickets" },
     { label: "GALLERY", href: "/gallery" },
     { label: "TERMS", href: "/terms" },
   ],
@@ -55,6 +55,7 @@ export const site = {
     { label: "BUY TICKETS", href: "/events" },
     { label: "EVENTS", href: "/events" },
     { label: "GALLERY", href: "/gallery" },
+    { label: "MY TICKETS", href: "/my-tickets" },
     { label: "LOG IN", href: "/login" },
   ],
 } as const;
